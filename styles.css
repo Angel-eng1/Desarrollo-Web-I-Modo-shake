@@ -265,7 +265,9 @@ textarea:focus-visible {
 }
 
 .producto {
+  display: flex;
   min-height: 190px;
+  flex-direction: column;
   padding: 25px;
   border: 1px solid var(--borde);
   border-radius: var(--radio);
@@ -298,6 +300,7 @@ textarea:focus-visible {
 }
 
 .producto p:last-child {
+  margin-top: auto;
   margin-bottom: 0;
   color: var(--verde-oscuro);
   font-weight: 800;
@@ -501,6 +504,31 @@ textarea:focus-visible {
 
   .pie nav ul {
     flex-wrap: wrap;
+  }
+}
+
+/* Ajustes adicionales para celulares pequeños */
+@media (max-width: 400px) {
+  .encabezado {
+    gap: 10px;
+  }
+
+  .encabezado nav ul {
+    gap: 8px 12px;
+    font-size: 0.92rem;
+  }
+
+  .encabezado > .boton {
+    padding: 9px 12px;
+    font-size: 0.82rem;
+  }
+
+  .portada h1 {
+    font-size: 2.55rem;
+  }
+
+  .producto {
+    padding: 18px;
   }
 }
 
