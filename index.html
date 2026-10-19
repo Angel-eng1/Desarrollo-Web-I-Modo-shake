@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="Conoce Modo Shake y explora nuestro catálogo de comida saludable en Sahagún, Córdoba."
+  >
+  <meta name="theme-color" content="#fff4e5">
+
+  <title>Modo Shake | Fit market🛒</title>
+
+  <!-- Tipografías tomadas de Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Nunito+Sans:wght@400;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Iconos desde Bootstrap Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+  >
+
+  <!-- Hoja de estilos del proyecto -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <a class="salto-contenido" href="#contenido">
+    Saltar al contenido
+  </a>
+
+  <header class="encabezado">
+    <a
+      class="marca"
+      href="#inicio"
+      aria-label="Modo Shake, ir al inicio"
+    >
+      <img
+        class="logo"
+        src="images/logo modoshake.jpg"
+        alt="Logo de Modo Shake"
+        width="72"
+        height="72"
+      >
+    </a>
+
+    <nav aria-label="Navegación principal">
+      <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#catalogo">Catálogo</a></li>
+        <li><a href="#productos">Productos</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <a class="boton" href="#catalogo">
+      Explorar catálogo
+      <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+    </a>
+  </header>
+
+  <main id="contenido">
+    <section
+      class="portada"
+      id="inicio"
+      aria-labelledby="titulo-inicio"
+    >
+      <p class="etiqueta">Hecho con ingredientes que te hacen bien</p>
+
+      <h1 id="titulo-inicio">
+        Alimentación saludable,
+        <span>sabor que te encanta.</span>
+      </h1>
+
+      <p>
+        Tu pausa rica y nutritiva está en Modo Shake.
+        Descubre batidos, waffles, bowls y mucho más,
+        preparados para acompañar tu ritmo.
+      </p>
+
+      <a class="boton" href="#catalogo">
+        Ver catálogo
+        <i class="bi bi-arrow-right" aria-hidden="true"></i>
+      </a>
+    </section>
+
+    <section
+      class="catalogo"
+      id="catalogo"
+      aria-labelledby="titulo-catalogo"
+    >
+      <p class="etiqueta">PARA CADA ANTOJO</p>
+
+      <h2 id="titulo-catalogo">Explora nuestro catálogo</h2>
+
+      <p>
+        Descubre opciones preparadas para disfrutar y acompañar tu día.
+      </p>
+
+      <ul class="categorias" aria-label="Categorías de productos">
+        <li>Batidos</li>
+        <li>Waffles</li>
+        <li>Pancakes</li>
+        <li>Bowls</li>
+        <li>Sándwiches</li>
+        <li>Suplementos</li>
+        <li>Sodas</li>
+      </ul>
+
+      <div class="productos" id="productos">
+        <article class="producto">
+          <h3>Batido de fresa</h3>
+          <p>
+            Explora los sabores de batidos disponibles en Modo Shake.
+          </p>
+          <p>Precio: por confirmar</p>
+        </article>
+
+        <article class="producto">
+          <h3>Waffle de frutos rojos</h3>
+          <p>
+            Una opción dulce para disfrutar en cualquier momento.
+          </p>
+          <p>Precio: por confirmar</p>
+        </article>
+
+        <article class="producto">
+          <h3>Pancakes de avena y banano</h3>
+          <p>
+            Pancakes para disfrutar en el desayuno o como una pausa rica.
+          </p>
+          <p>Precio: por confirmar</p>
+        </article>
+
+        <article class="producto">
+          <h3>Bowl de frutas y granola</h3>
+          <p>
+            Una combinación fresca de frutas y granola.
+          </p>
+          <p>Precio: por confirmar</p>
+        </article>
+
+        <article class="producto">
+          <h3>Sándwich</h3>
+          <p>
+            Consulta las opciones saladas disponibles en el restaurante.
+          </p>
+          <p>Precio: por confirmar</p>
+        </article>
+
+        <article class="producto">
+          <h3>Suplementos</h3>
+          <p>
+            Consulta las opciones de suplementos disponibles.
+          </p>
+          <p>Precio: por confirmar</p>
+        </article>
+
+        <article class="producto">
+          <h3>Sodas</h3>
+          <p>
+            Consulta los sabores y presentaciones disponibles.
+          </p>
+          <p>Precio: por confirmar</p>
+        </article>
+      </div>
+
+      <aside class="nota-catalogo">
+        <h3>¿Buscas una opción específica?</h3>
+        <p>
+          Contáctanos para consultar las opciones disponibles.
+        </p>
+        <a href="#contacto">Hacer una consulta</a>
+      </aside>
+    </section>
+
+    <section
+      class="nosotros"
+      id="nosotros"
+      aria-labelledby="titulo-nosotros"
+    >
+      <p class="etiqueta">CONOCE MODO SHAKE</p>
+
+      <h2 id="titulo-nosotros">
+        Sabor que acompaña tu bienestar
+      </h2>
+
+      <p>
+        Modo Shake es un restaurante fitness en Sahagún, Córdoba.
+        Ofrecemos batidos, waffles, pancakes, bowls y otras opciones
+        para quienes buscan disfrutar de alimentos preparados con cuidado.
+      </p>
+    </section>
+
+    <section
+      class="contacto"
+      id="contacto"
+      aria-labelledby="titulo-contacto"
+    >
+      <p class="etiqueta">NOS VEMOS PRONTO</p>
+
+      <h2 id="titulo-contacto">Contáctanos</h2>
+
+      <p>Déjanos tus datos y cuéntanos qué necesitas.</p>
+
+      <form>
+        <label for="nombre">Nombre completo</label>
+        <input
+          type="text"
+          id="nombre"
+          name="nombre"
+          minlength="3"
+          maxlength="60"
+          autocomplete="name"
+          required
+        >
+
+        <label for="correo">Correo electrónico</label>
+        <input
+          type="email"
+          id="correo"
+          name="correo"
+          autocomplete="email"
+          required
+        >
+
+        <label for="telefono">Teléfono</label>
+        <input
+          type="tel"
+          id="telefono"
+          name="telefono"
+          pattern="[0-9]{10}"
+          title="Escribe 10 números, sin espacios"
+          autocomplete="tel"
+          required
+        >
+
+        <label for="fecha">Fecha preferida de visita</label>
+        <input
+          type="date"
+          id="fecha"
+          name="fecha"
+          required
+        >
+
+        <label for="personas">Número de personas</label>
+        <input
+          type="number"
+          id="personas"
+          name="personas"
+          min="1"
+          max="12"
+          required
+        >
+
+        <label for="motivo">Motivo de tu consulta</label>
+        <select id="motivo" name="motivo" required>
+          <option value="" selected disabled>
+            Selecciona una opción
+          </option>
+          <option value="menu">Consultar el menú</option>
+          <option value="ubicacion">Consultar ubicación u horario</option>
+          <option value="otro">Otro</option>
+        </select>
+
+        <label for="mensaje">Mensaje</label>
+        <textarea
+          id="mensaje"
+          name="mensaje"
+          rows="4"
+          maxlength="400"
+        ></textarea>
+
+        <button class="boton" type="submit">
+          Enviar consulta
+          <i class="bi bi-arrow-right" aria-hidden="true"></i>
+        </button>
+      </form>
+
+      <p class="aviso-formulario">
+        Formulario de demostración; todavía no está conectado a un servidor.
+      </p>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <a href="#inicio">Modo Shake</a>
+    <p>Sabor saludable en Sahagún, Córdoba.</p>
+
+    <nav aria-label="Enlaces del pie de página">
+      <ul>
+        <li><a href="#inicio">Inicio</a></li>
+        <li><a href="#catalogo">Catálogo</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+
+    <small>© 2026 Modo Shake. Proyecto académico.</small>
+  </footer>
+</body>
+</html>
