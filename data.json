@@ -2,17 +2,17 @@
   {
     "id": 1,
     "nombre": "Batido de fresa",
-    "descripcion": "Explora los sabores de batidos disponibles en Modo Shake.",
+    "descripcion": "Batido de fresa para disfrutar en cualquier momento.",
     "precio": 15000,
     "categoria": "Batidos",
-    "imagen": "images/batido de fresa.jpg",
+    "imagen": "images/batido-fresa.jpg",
     "alt": "Batido de fresa de Modo Shake",
     "precioDesde": false
   },
   {
     "id": 2,
     "nombre": "Waffle de frutos rojos",
-    "descripcion": "Una opción dulce para disfrutar en cualquier momento.",
+    "descripcion": "Waffle de frutos rojos para una pausa dulce.",
     "precio": 14000,
     "categoria": "Waffles",
     "imagen": "images/waffles.jpg",
@@ -22,7 +22,7 @@
   {
     "id": 3,
     "nombre": "Pancakes de avena y banano",
-    "descripcion": "Pancakes para disfrutar en el desayuno o como una pausa rica.",
+    "descripcion": "Pancakes de avena y banano para empezar el día.",
     "precio": 15000,
     "categoria": "Pancakes",
     "imagen": "images/pancake.jpg",
@@ -32,7 +32,7 @@
   {
     "id": 4,
     "nombre": "Bowl de frutas y granola",
-    "descripcion": "Una combinación fresca de frutas y granola.",
+    "descripcion": "Bowl de frutas y granola para disfrutar a tu ritmo.",
     "precio": 16000,
     "categoria": "Bowls",
     "imagen": "images/bowl.jpg",
@@ -42,7 +42,7 @@
   {
     "id": 5,
     "nombre": "Sándwich",
-    "descripcion": "Consulta las opciones saladas disponibles en el restaurante.",
+    "descripcion": "Sándwich para una pausa salada.",
     "precio": 16000,
     "categoria": "Sándwiches",
     "imagen": "images/sandwich.jpg",
@@ -52,7 +52,7 @@
   {
     "id": 6,
     "nombre": "Suplementos",
-    "descripcion": "Consulta las opciones de suplementos disponibles.",
+    "descripcion": "Suplementos disponibles para complementar tu elección.",
     "precio": 10000,
     "categoria": "Suplementos",
     "imagen": "images/suplementos.jpg",
@@ -62,7 +62,7 @@
   {
     "id": 7,
     "nombre": "Sodas",
-    "descripcion": "Consulta los sabores y presentaciones disponibles.",
+    "descripcion": "Sodas para acompañar tu momento.",
     "precio": 14000,
     "categoria": "Sodas",
     "imagen": "images/sodas.jpg",
