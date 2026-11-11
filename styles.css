@@ -718,3 +718,35 @@ main > section:not([hidden]) { animation: entrar-vista 350ms ease both; }
   .portada h1 { font-size: 2.55rem; }
   .detalle-carrito p { font-size: 0.7rem; }
 }
+
+
+/* Mensajes del formulario y consultas guardadas */
+.campo-formulario { display: flex; flex-direction: column; }
+.campo-formulario[aria-invalid="true"],
+.campo-formulario :is(input,select,textarea)[aria-invalid="true"] {
+  border-color: #a32620;
+}
+.error-campo { display: block; min-height: 1.3em; margin-top: 5px; color: #a32620; font-size: 0.82rem; }
+#estado-formulario { margin-top: 18px; color: var(--verde-oscuro); font-weight: 700; }
+.consultas-guardadas { max-width: 850px; margin-top: 34px; }
+.consultas-guardadas h3 { font-size: 1.3rem; margin-bottom: 8px; }
+.consultas-guardadas > p { color: #66665e; }
+.consultas-guardadas ul { list-style: none; }
+.consultas-guardadas li {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 12px;
+  padding: 18px 22px;
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: 16px;
+}
+.consultas-guardadas li > div { min-width: 0; }
+.consultas-guardadas li p { overflow-wrap: anywhere; margin: 4px 0; }
+.consultas-guardadas details { margin-top: 8px; }
+.consultas-guardadas summary { cursor: pointer; color: var(--verde-oscuro); font-weight: 700; }
+@media (max-width: 600px) {
+  .consultas-guardadas li { flex-direction: column; gap: 6px; }
+}

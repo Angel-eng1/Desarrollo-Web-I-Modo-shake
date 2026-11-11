@@ -401,3 +401,178 @@ document.addEventListener("carrito:aviso", evento => {
   clearTimeout(tiempoAviso);
   tiempoAviso = setTimeout(() => { aviso.hidden = true; }, 5000);
 });
+
+
+// ==================================================
+// FORMULARIO: VALIDACIÓN Y PERSISTENCIA LOCAL
+// ==================================================
+
+const formularioContacto = document.querySelector("#formulario-contacto");
+const camposContacto = [...formularioContacto.querySelectorAll("input, select, textarea")];
+const estadoFormulario = document.querySelector("#estado-formulario");
+const listaConsultas = document.querySelector("#lista-consultas");
+const CLAVE_BORRADOR = "modo-shake-borrador";
+const CLAVE_CONSULTAS = "modo-shake-consultas";
+let consultas = [];
+
+function leerLocal(clave, valorInicial) {
+  try {
+    const datos = JSON.parse(localStorage.getItem(clave));
+    return datos === null ? valorInicial : datos;
+  } catch {
+    estadoFormulario.textContent = "No se pudieron recuperar todos los datos guardados en este navegador.";
+    return valorInicial;
+  }
+}
+
+function guardarLocal(clave, datos) {
+  try {
+    localStorage.setItem(clave, JSON.stringify(datos));
+    return true;
+  } catch {
+    estadoFormulario.textContent = "Este navegador no permitió guardar los datos. Revisa sus permisos de almacenamiento.";
+    return false;
+  }
+}
+
+function borrarLocal(clave) {
+  try {
+    localStorage.removeItem(clave);
+  } catch {
+    estadoFormulario.textContent = "No se pudo borrar el borrador guardado.";
+  }
+}
+
+function datosFormulario() {
+  return Object.fromEntries(camposContacto.map(campo => [campo.name, campo.value.trim()]));
+}
+
+function guardarBorrador() {
+  guardarLocal(CLAVE_BORRADOR, datosFormulario());
+}
+
+function mensajeCampo(campo) {
+  const validez = campo.validity;
+  if (validez.valueMissing) return "Este campo es obligatorio.";
+  if (validez.typeMismatch) return "Escribe un correo electrónico válido.";
+  if (validez.patternMismatch) return "Escribe 10 números, sin espacios ni letras.";
+  if (validez.tooShort) return `Escribe al menos ${campo.minLength} caracteres.`;
+  if (validez.tooLong) return `Escribe máximo ${campo.maxLength} caracteres.`;
+  if (validez.rangeUnderflow) return `El valor mínimo es ${campo.min}.`;
+  if (validez.rangeOverflow) return `El valor máximo es ${campo.max}.`;
+  if (validez.badInput || validez.stepMismatch) return "Escribe un número entero válido.";
+  if (campo.name === "fecha" && campo.value) {
+    const hoy = new Date();
+    const fechaLocal = `${hoy.getFullYear()}-${String(hoy.getMonth() + 1).padStart(2, "0")}-${String(hoy.getDate()).padStart(2, "0")}`;
+    if (campo.value < fechaLocal) return "Elige una fecha de hoy o posterior.";
+  }
+  return "";
+}
+
+function validarCampo(campo) {
+  const mensaje = mensajeCampo(campo);
+  const aviso = document.getElementById(`error-${campo.id}`);
+  aviso.textContent = mensaje;
+  campo.setAttribute("aria-invalid", String(Boolean(mensaje)));
+  return !mensaje;
+}
+
+camposContacto.forEach(campo => {
+  const aviso = document.createElement("small");
+  aviso.className = "error-campo";
+  aviso.id = `error-${campo.id}`;
+  campo.closest(".campo-formulario").append(aviso);
+  campo.setAttribute("aria-describedby", aviso.id);
+  campo.addEventListener("input", () => {
+    validarCampo(campo);
+    guardarBorrador();
+  });
+  campo.addEventListener("change", () => {
+    validarCampo(campo);
+    guardarBorrador();
+  });
+});
+
+const borrador = leerLocal(CLAVE_BORRADOR, {});
+if (borrador && typeof borrador === "object" && !Array.isArray(borrador)) {
+  camposContacto.forEach(campo => {
+    if (typeof borrador[campo.name] === "string") campo.value = borrador[campo.name];
+  });
+}
+const datosGuardados = leerLocal(CLAVE_CONSULTAS, []);
+consultas = Array.isArray(datosGuardados)
+  ? datosGuardados.filter(dato => dato && typeof dato.id === "string" && typeof dato.nombre === "string")
+  : [];
+
+function mostrarConsultas() {
+  listaConsultas.replaceChildren();
+  if (!consultas.length) {
+    const vacia = document.createElement("li");
+    vacia.textContent = "Aún no tienes consultas guardadas.";
+    listaConsultas.append(vacia);
+    return;
+  }
+  consultas.forEach(consulta => {
+    const fila = document.createElement("li");
+    const datos = document.createElement("div");
+    const nombre = document.createElement("strong");
+    nombre.textContent = consulta.nombre;
+    const resumen = document.createElement("p");
+    const motivos = {
+      menu: "Consulta del menú",
+      ubicacion: "Ubicación u horario",
+      otro: "Otra consulta"
+    };
+    resumen.textContent = `${motivos[consulta.motivo] || "Consulta"} · ${consulta.fecha} · ${consulta.personas} persona(s)`;
+    const detalles = document.createElement("details");
+    const titulo = document.createElement("summary");
+    titulo.textContent = "Ver datos guardados";
+    const contacto = document.createElement("p");
+    contacto.textContent = `Correo: ${consulta.correo} · Teléfono: ${consulta.telefono}`;
+    const mensaje = document.createElement("p");
+    mensaje.textContent = consulta.mensaje || "Sin mensaje adicional.";
+    detalles.append(titulo, contacto, mensaje);
+    datos.append(nombre, resumen, detalles);
+    const eliminar = document.createElement("button");
+    eliminar.type = "button";
+    eliminar.className = "boton-texto";
+    eliminar.textContent = "Eliminar";
+    eliminar.setAttribute("aria-label", `Eliminar consulta de ${consulta.nombre}`);
+    eliminar.addEventListener("click", () => {
+      const anteriores = consultas;
+      consultas = consultas.filter(item => item.id !== consulta.id);
+      if (!guardarLocal(CLAVE_CONSULTAS, consultas)) {
+        consultas = anteriores;
+        return;
+      }
+      mostrarConsultas();
+      estadoFormulario.textContent = "Consulta eliminada de este navegador.";
+    });
+    fila.append(datos, eliminar);
+    listaConsultas.append(fila);
+  });
+}
+mostrarConsultas();
+
+formularioContacto.addEventListener("submit", evento => {
+  evento.preventDefault();
+  const invalidos = camposContacto.filter(campo => !validarCampo(campo));
+  if (invalidos.length) {
+    estadoFormulario.textContent = "Revisa los campos marcados antes de guardar la consulta.";
+    invalidos[0].focus();
+    return;
+  }
+
+  const consulta = { id: crypto.randomUUID(), ...datosFormulario() };
+  const nuevas = [consulta, ...consultas];
+  if (!guardarLocal(CLAVE_CONSULTAS, nuevas)) return;
+  consultas = nuevas;
+  formularioContacto.reset();
+  camposContacto.forEach(campo => {
+    campo.setAttribute("aria-invalid", "false");
+    document.getElementById(`error-${campo.id}`).textContent = "";
+  });
+  borrarLocal(CLAVE_BORRADOR);
+  mostrarConsultas();
+  estadoFormulario.textContent = "Consulta guardada en este navegador. No fue enviada al restaurante.";
+});

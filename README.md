@@ -16,7 +16,7 @@ Abre la carpeta del proyecto en Visual Studio Code y ejecuta `index.html` con Li
 
 ## Alcance académico
 
-En este primer avance no se incluye JavaScript, persistencia, carrito funcional ni backend. El formulario es una maqueta y no transmite información. Según la guía, el segundo avance incorpora interacción con JavaScript y almacenamiento local; la entrega final migra a Vue.js. La propuesta original menciona React, pero el camino previsto para ajustarse a la guía de evaluación es Vue.js.
+El primer avance consistió en HTML y CSS. En el segundo se incorporó JavaScript, catálogo dinámico, carrito y guardado local de consultas. La información del formulario no se transmite a un servidor. Según la guía, el segundo avance incorpora interacción con JavaScript y almacenamiento local; la entrega final migra a Vue.js. La propuesta original menciona React, pero el camino previsto para ajustarse a la guía de evaluación es Vue.js.
 
 
 ## Avance 2 en desarrollo: catálogo dinámico
@@ -29,7 +29,7 @@ El carrito permite agregar productos, modificar cantidades enteras entre 1 y 99,
 
 Para comprobar la persistencia, recarga usando la misma dirección y puerto de Live Server: el almacenamiento pertenece a ese origen y navegador.
 
-Todavía están pendientes la persistencia y validación dinámica del formulario.
+El formulario muestra errores junto a cada campo mientras se escribe y exige una fecha actual o futura. Guarda el borrador y las consultas válidas en localStorage; se pueden revisar y eliminar desde la misma página. Los datos permanecen únicamente en este navegador: no se envían al restaurante ni se guardan en un servidor.
 
 ## Navegación y diseño de las vistas
 
@@ -39,4 +39,4 @@ El carrito presenta imágenes, cantidades, subtotales y un resumen, con avisos a
 
 ## Organización de JavaScript
 
-Toda la lógica de carrito, catálogo, filtros y navegación está en `app.js`. Sus bloques están separados por comentarios para poder estudiar cada funcionalidad.
+Toda la lógica de carrito, catálogo, filtros, navegación y formulario está en `app.js`. Sus bloques están separados por comentarios para poder estudiar cada funcionalidad.

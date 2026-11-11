@@ -237,7 +237,7 @@
 
       <p>Déjanos tus datos y cuéntanos qué necesitas.</p>
 
-      <form>
+      <form id="formulario-contacto" novalidate>
         <div class="campo-formulario"><label for="nombre">Nombre completo</label>
         <input
           type="text"
@@ -312,8 +312,14 @@
       </form>
 
       <p class="aviso-formulario">
-        Formulario de demostración; todavía no está conectado a un servidor.
+        Tu consulta se guarda únicamente en este navegador. No se envía al restaurante.
       </p>
+      <p id="estado-formulario" role="status" aria-live="polite"></p>
+      <section class="consultas-guardadas" aria-labelledby="titulo-consultas">
+        <h3 id="titulo-consultas">Consultas guardadas en este navegador</h3>
+        <p>Podrás revisarlas al volver a abrir esta página en el mismo navegador.</p>
+        <ul id="lista-consultas"></ul>
+      </section>
     </section>
   </main>
 
