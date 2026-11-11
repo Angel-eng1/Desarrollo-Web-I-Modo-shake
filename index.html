@@ -56,16 +56,25 @@
         <li><a href="#inicio">Inicio</a></li>
         <li><a href="#catalogo">Catálogo</a></li>
         <li><a href="#productos">Productos</a></li>
-        <li><a href="#carrito">Carrito <span id="contador-carrito" class="insignia">0</span></a></li>
         <li><a href="#nosotros">Nosotros</a></li>
         <li><a href="#contacto">Contacto</a></li>
       </ul>
     </nav>
 
-    <a class="boton" href="#catalogo">
-      Explorar catálogo
-      <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
-    </a>
+    <div class="acciones-encabezado">
+      <a class="enlace-carrito" href="#carrito" aria-label="Carrito, 0 productos" title="Ver carrito">
+        <i class="bi bi-cart3" aria-hidden="true"></i>
+        <span id="contador-carrito" class="insignia" aria-hidden="true">0</span>
+      </a>
+      <a class="boton" href="#catalogo">
+        Explorar catálogo
+        <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+      </a>
+      <a class="enlace-perfil" href="#perfil" aria-label="Perfil, entrar o registrarse" title="Perfil">
+        <i class="bi bi-person-circle" aria-hidden="true"></i>
+        <span id="nombre-perfil-encabezado" class="sr-only">Entrar o registrarse</span>
+      </a>
+    </div>
   </header>
 
   <main id="contenido">
@@ -205,6 +214,37 @@
           <button class="boton-texto" id="vaciar-carrito" type="button" disabled>Vaciar carrito</button>
           <p class="aviso-formulario">Esta selección no realiza pedidos ni pagos.</p>
         </aside>
+      </div>
+    </section>
+
+    <section class="perfil" id="perfil" aria-labelledby="titulo-perfil">
+      <p class="etiqueta">TU ESPACIO</p>
+      <h2 id="titulo-perfil" tabindex="-1">Tu perfil Modo Shake</h2>
+      <p>Regístrate para guardar tu selección y agregar productos al carrito.</p>
+      <p class="aviso-formulario">Demostración local: el perfil se guarda únicamente en este navegador y no verifica tu identidad. No ingreses una contraseña.</p>
+      <p id="estado-perfil" role="status" aria-live="polite"></p>
+      <div id="acceso-perfil" class="paneles-perfil">
+        <form id="registro-perfil">
+          <h3>Crear perfil</h3>
+          <label for="perfil-nombre">Nombre</label>
+          <input id="perfil-nombre" name="nombre" type="text" minlength="3" maxlength="60" autocomplete="name" required>
+          <label for="perfil-correo">Correo electrónico</label>
+          <input id="perfil-correo" name="correo" type="email" autocomplete="email" required>
+          <button class="boton" type="submit">Registrarme</button>
+        </form>
+        <form id="ingreso-perfil">
+          <h3>Entrar a un perfil guardado</h3>
+          <label for="ingreso-correo">Correo electrónico</label>
+          <input id="ingreso-correo" name="correo" type="email" autocomplete="email" required>
+          <button class="boton" type="submit">Entrar</button>
+          <p class="aviso-formulario">Disponible solo para perfiles creados en este mismo navegador.</p>
+        </form>
+      </div>
+      <div id="sesion-perfil" class="sesion-perfil" hidden>
+        <span class="avatar-perfil" aria-hidden="true"><i class="bi bi-person-fill"></i></span>
+        <div><h3 id="nombre-perfil"></h3><p id="correo-perfil"></p></div>
+        <button id="cerrar-perfil" class="boton-texto" type="button">Cerrar sesión</button>
+        <button id="eliminar-perfil" class="boton-texto" type="button">Eliminar perfil local</button>
       </div>
     </section>
 

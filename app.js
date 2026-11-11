@@ -1,10 +1,162 @@
 // ==================================================
+// PERFILES LOCALES DE DEMOSTRACIÓN
+// ==================================================
+
+// Estos perfiles no son cuentas verificadas: no hay servidor ni contraseñas.
+const Perfiles = (() => {
+  const CLAVE_PERFILES = "modo-shake-perfiles";
+  const CLAVE_ACTIVO = "modo-shake-perfil-activo";
+  const estado = document.querySelector("#estado-perfil");
+  const acceso = document.querySelector("#acceso-perfil");
+  const sesion = document.querySelector("#sesion-perfil");
+  const registro = document.querySelector("#registro-perfil");
+  const ingreso = document.querySelector("#ingreso-perfil");
+  let perfiles = [];
+  let activo = null;
+  let productoPendiente = null;
+
+  function leer(clave, inicial) {
+    try {
+      const valor = JSON.parse(localStorage.getItem(clave));
+      return valor === null ? inicial : valor;
+    } catch {
+      estado.textContent = "No se pudieron recuperar los perfiles de este navegador.";
+      return inicial;
+    }
+  }
+
+  function guardar(clave, valor) {
+    try {
+      localStorage.setItem(clave, JSON.stringify(valor));
+      return true;
+    } catch {
+      estado.textContent = "El navegador no permitió guardar el perfil. Revisa sus permisos de almacenamiento.";
+      return false;
+    }
+  }
+
+  function actualizarVista() {
+    acceso.hidden = Boolean(activo);
+    sesion.hidden = !activo;
+    document.querySelector("#nombre-perfil").textContent = activo?.nombre || "";
+    document.querySelector("#correo-perfil").textContent = activo?.correo || "";
+    const boton = document.querySelector(".enlace-perfil");
+    boton.setAttribute("aria-label", activo ? `Perfil de ${activo.nombre}` : "Perfil, entrar o registrarse");
+    boton.title = activo ? `Perfil de ${activo.nombre}` : "Perfil";
+    document.querySelector("#nombre-perfil-encabezado").textContent = activo?.nombre || "Entrar o registrarse";
+  }
+
+  function activar(perfil) {
+    if (!guardar(CLAVE_ACTIVO, perfil.correo)) return;
+    activo = perfil;
+    actualizarVista();
+    Carrito.cambiarPerfil();
+    estado.textContent = `Entraste como ${perfil.nombre}.`;
+    registro.reset();
+    ingreso.reset();
+    if (productoPendiente !== null) {
+      const id = productoPendiente;
+      productoPendiente = null;
+      Carrito.agregar(id);
+      location.hash = "#carrito";
+    }
+  }
+
+  const almacenados = leer(CLAVE_PERFILES, []);
+  perfiles = Array.isArray(almacenados)
+    ? almacenados.filter(item => item && typeof item.nombre === "string" && typeof item.correo === "string")
+    : [];
+  const correoActivo = leer(CLAVE_ACTIVO, "");
+  activo = perfiles.find(item => item.correo === correoActivo) || null;
+  actualizarVista();
+
+  registro.addEventListener("submit", evento => {
+    evento.preventDefault();
+    if (!registro.reportValidity()) return;
+    const nombre = registro.elements.nombre.value.trim();
+    const correo = registro.elements.correo.value.trim().toLowerCase();
+    if (nombre.length < 3) {
+      estado.textContent = "Escribe un nombre de al menos tres caracteres.";
+      return;
+    }
+    if (perfiles.some(item => item.correo === correo)) {
+      estado.textContent = "Ya existe un perfil con ese correo en este navegador. Usa la opción Entrar.";
+      return;
+    }
+    const nuevos = [...perfiles, { nombre, correo }];
+    if (!guardar(CLAVE_PERFILES, nuevos)) return;
+    perfiles = nuevos;
+    activar(nuevos[nuevos.length - 1]);
+  });
+
+  ingreso.addEventListener("submit", evento => {
+    evento.preventDefault();
+    if (!ingreso.reportValidity()) return;
+    const correo = ingreso.elements.correo.value.trim().toLowerCase();
+    const perfil = perfiles.find(item => item.correo === correo);
+    if (!perfil) {
+      estado.textContent = "No hay un perfil con ese correo en este navegador. Regístrate primero.";
+      return;
+    }
+    activar(perfil);
+  });
+
+  document.querySelector("#cerrar-perfil").addEventListener("click", () => {
+    try {
+      localStorage.removeItem(CLAVE_ACTIVO);
+    } catch {
+      estado.textContent = "No se pudo cerrar la sesión local.";
+      return;
+    }
+    activo = null;
+    productoPendiente = null;
+    Carrito.cambiarPerfil();
+    actualizarVista();
+    estado.textContent = "Sesión local cerrada.";
+  });
+
+  document.querySelector("#eliminar-perfil").addEventListener("click", () => {
+    if (!activo) return;
+    const anteriores = perfiles;
+    const correo = activo.correo;
+    const restantes = perfiles.filter(item => item.correo !== correo);
+    if (!guardar(CLAVE_PERFILES, restantes)) return;
+    perfiles = restantes;
+    try {
+      localStorage.removeItem(`modo-shake-carrito:${correo}`);
+      localStorage.removeItem(CLAVE_ACTIVO);
+    } catch {
+      perfiles = anteriores;
+      guardar(CLAVE_PERFILES, anteriores);
+      estado.textContent = "No se pudo eliminar completamente el perfil local.";
+      return;
+    }
+    activo = null;
+    productoPendiente = null;
+    Carrito.cambiarPerfil();
+    actualizarVista();
+    estado.textContent = "Perfil y carrito local eliminados de este navegador.";
+  });
+
+  return {
+    actual: () => activo,
+    solicitarRegistro(id) {
+      productoPendiente = id;
+      location.hash = "#perfil";
+      if (location.hash === "#perfil") mostrarVista(true);
+      estado.textContent = "Crea un perfil o entra para agregar este producto al carrito.";
+    }
+  };
+})();
+
+// ==================================================
 // CARRITO
 // ==================================================
 
 // Este módulo conserva identificadores y cantidades. Los precios vienen del catálogo.
 const Carrito = (() => {
   const CLAVE = "modo-shake-carrito";
+  const clavePerfil = () => `${CLAVE}:${Perfiles.actual()?.correo || "sin-perfil"}`;
   const MAXIMO = 99;
   let catalogo = [];
   let items = [];
@@ -22,7 +174,7 @@ const Carrito = (() => {
 
   function guardar() {
     try {
-      localStorage.setItem(CLAVE, JSON.stringify(items));
+      localStorage.setItem(clavePerfil(), JSON.stringify(items));
       aviso.textContent = "";
     } catch {
       aviso.textContent = "No se pudo guardar el carrito en este navegador. Los cambios solo se conservarán mientras esta página siga abierta.";
@@ -31,7 +183,7 @@ const Carrito = (() => {
 
   function recuperar() {
     try {
-      const datos = JSON.parse(localStorage.getItem(CLAVE) || "[]");
+      const datos = JSON.parse(localStorage.getItem(clavePerfil()) || "[]");
       if (!Array.isArray(datos)) throw new Error("Carrito inválido");
       const ids = new Set();
       // Ignoramos registros dañados y productos que ya no estén en el catálogo.
@@ -127,16 +279,22 @@ const Carrito = (() => {
       suma + catalogo.find(producto => producto.id === item.id).precio * item.cantidad, 0);
     const estimado = items.some(item => catalogo.find(producto => producto.id === item.id).precioDesde);
     contador.textContent = unidades;
+    document.querySelector(".enlace-carrito").setAttribute("aria-label",
+      `Carrito, ${unidades} ${unidades === 1 ? "producto" : "productos"}`);
     total.textContent = `${estimado ? "Total estimado" : "Total"}: ${moneda.format(importe)} COP`;
     notaPrecio.hidden = !estimado;
     vaciar.disabled = items.length === 0;
     document.querySelector("#carrito-vacio").hidden = items.length !== 0;
-    estado.textContent = items.length ? `${unidades} unidades en tu carrito.` : "Tu carrito está vacío.";
+    estado.textContent = items.length ? `${unidades} ${unidades === 1 ? "unidad" : "unidades"} en tu carrito.` : "Tu carrito está vacío.";
   }
 
   function agregar(id) {
     const producto = catalogo.find(producto => producto.id === id);
     if (!iniciado || !producto) return;
+    if (!Perfiles.actual()) {
+      Perfiles.solicitarRegistro(id);
+      return;
+    }
     const existente = items.find(item => item.id === id);
     if (existente && existente.cantidad >= MAXIMO) {
       estado.textContent = `Puedes agregar hasta ${MAXIMO} unidades de cada producto.`;
@@ -153,7 +311,7 @@ const Carrito = (() => {
 
   function iniciar(productos) {
     catalogo = productos;
-    if (!iniciado) recuperar();
+    if (!iniciado && Perfiles.actual()) recuperar();
     iniciado = true;
     mostrar();
   }
@@ -165,7 +323,13 @@ const Carrito = (() => {
     document.querySelector("#titulo-carrito").focus();
   });
 
-  return { iniciar, agregar };
+  function cambiarPerfil() {
+    items = [];
+    if (iniciado && Perfiles.actual()) recuperar();
+    if (iniciado) mostrar();
+  }
+
+  return { iniciar, agregar, cambiarPerfil };
 })();
 
 // ==================================================
@@ -355,6 +519,10 @@ function mostrarVista(enfocar = false) {
   const vista = vistas.includes(destino) ? destino : document.querySelector("#inicio");
   vistas.forEach(seccion => { seccion.hidden = seccion !== vista; });
   enlacesMenu.forEach(enlace => {
+    if (enlace.hash === `#${vista.id}`) enlace.setAttribute("aria-current", "page");
+    else enlace.removeAttribute("aria-current");
+  });
+  document.querySelectorAll(".acciones-encabezado a[href^='#']").forEach(enlace => {
     if (enlace.hash === `#${vista.id}`) enlace.setAttribute("aria-current", "page");
     else enlace.removeAttribute("aria-current");
   });

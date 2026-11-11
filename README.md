@@ -37,3 +37,9 @@ Se necesita un servidor HTTP local para que Fetch pueda leer `data.json`; abrir 
 ## Desarrollo académico
 
 El primer avance cubrió HTML5 semántico, formulario con atributos nativos, diseño adaptable y recursos externos. Este segundo avance incorpora manipulación del DOM, eventos, carga asíncrona de datos, manejo de errores, validaciones dinámicas y persistencia local. La entrega final de la guía prevé migrar la aplicación a Vue.js y publicarla.
+
+## Perfiles locales de demostración
+
+El icono de perfil del encabezado permite crear un perfil con nombre y correo o volver a entrar con un correo previamente registrado en este mismo navegador. Antes de agregar un producto se solicita un perfil; cada perfil conserva su propio carrito local. Cerrar sesión oculta el carrito del perfil activo; al volver a entrar se recupera. También puedes eliminar el perfil local y su carrito desde la vista Perfil.
+
+Esta función demuestra el flujo de registro e ingreso en el cliente. No usa contraseñas ni verifica identidades, por lo que no representa una cuenta segura ni funciona entre dispositivos. Los perfiles y carritos quedan guardados únicamente en localStorage.
