@@ -6,7 +6,7 @@ Aplicación frontend académica para presentar los productos de Modo Shake, en S
 
 - Catálogo de siete productos leído desde `data.json` con Fetch y `async/await`. Muestra estados de carga, error y reintento.
 - Búsqueda por nombre y filtros por categoría que actualizan las tarjetas sin recargar la página.
-- Vistas de Inicio, Catálogo, Productos, Carrito, Nosotros y Contacto, con enlaces que permiten usar Atrás y Adelante.
+- Vistas de Inicio, Catálogo, Productos, Carrito, Perfil, Nosotros y Contacto, con enlaces que permiten usar Atrás y Adelante.
 - Carrito para agregar y quitar productos, cambiar cantidades y calcular el total. La selección se conserva en `localStorage` tras recargar.
 - Formulario con validación inmediata, mensajes junto a cada campo y comprobación de la fecha. El borrador y las consultas válidas se guardan en `localStorage`, donde se pueden revisar o eliminar.
 
@@ -43,3 +43,22 @@ El primer avance cubrió HTML5 semántico, formulario con atributos nativos, dis
 El icono de perfil del encabezado permite crear un perfil con nombre y correo o volver a entrar con un correo previamente registrado en este mismo navegador. Antes de agregar un producto se solicita un perfil; cada perfil conserva su propio carrito local. Cerrar sesión oculta el carrito del perfil activo; al volver a entrar se recupera. También puedes eliminar el perfil local y su carrito desde la vista Perfil.
 
 Esta función demuestra el flujo de registro e ingreso en el cliente. No usa contraseñas ni verifica identidades, por lo que no representa una cuenta segura ni funciona entre dispositivos. Los perfiles y carritos quedan guardados únicamente en localStorage.
+
+## Mejoras de interfaz en esta rama
+
+- Encabezado fijo al desplazarse, navegación activa y menú móvil accesible que se cierra con Escape.
+- Portada con fotografía y beneficios breves; tarjetas de producto uniformes, búsqueda compacta, filtros desplazables y estado visual cuando no hay resultados o mientras carga el catálogo.
+- Carrito con resumen de pedido y aviso coherente con la configuración de WhatsApp.
+- Secciones Nosotros y Contacto reorganizadas, formulario con ayudas y consultas locales dentro de un panel plegable.
+- Imágenes optimizadas y renombradas con minúsculas y guiones (por ejemplo, `images/logo-modoshake.jpg` y `images/batido-fresa.jpg`); referencias actualizadas en HTML y datos. También se agregó favicon y etiquetas para compartir el sitio.
+
+## Datos del negocio por completar
+
+Al comienzo de `app.js` está `CONFIG_NEGOCIO`. Sus campos se dejan vacíos hasta que el negocio confirme los datos:
+
+- `whatsapp`: número con indicativo del país, solo dígitos, por ejemplo `57...`. Si se completa, aparece el botón para consultar por WhatsApp el carrito; abrir el enlace no procesa pagos.
+- `instagram`: nombre de usuario de la cuenta, con o sin `@`.
+- `direccion`: dirección exacta para mostrar en Contacto y el pie.
+- `horario`: horario de atención confirmado.
+
+La ciudad Sahagún, Córdoba se muestra aunque esos campos estén vacíos. Cuando se publique el sitio, conviene cambiar `og:image` y `twitter:image` en `index.html` por una URL pública absoluta del logo para que las vistas previas puedan mostrarlo. Los precios y la disponibilidad deben validarse con el negocio antes de publicar.
