@@ -54,11 +54,14 @@ Esta función demuestra el flujo de registro e ingreso en el cliente. No usa con
 
 ## Datos del negocio por completar
 
-Al comienzo de `app.js` está `CONFIG_NEGOCIO`. Sus campos se dejan vacíos hasta que el negocio confirme los datos:
+Al comienzo de `app.js` está `CONFIG_NEGOCIO`. Ya incluye el WhatsApp, Instagram, TikTok y los horarios proporcionados para este proyecto:
 
-- `whatsapp`: número con indicativo del país, solo dígitos, por ejemplo `57...`. Si se completa, aparece el botón para consultar por WhatsApp el carrito; abrir el enlace no procesa pagos.
-- `instagram`: nombre de usuario de la cuenta, con o sin `@`.
-- `direccion`: dirección exacta para mostrar en Contacto y el pie.
-- `horario`: horario de atención confirmado.
+- `whatsapp`: `573218794687`. El botón flotante abre una conversación directa y el carrito permite preparar una consulta con su resumen. Ninguno procesa pagos.
+- `instagram`: `modoshake` ([perfil](https://www.instagram.com/modoshake/)).
+- `tiktok`: `modoshake` ([perfil](https://www.tiktok.com/@modoshake)).
+- `horario`: lunes a viernes, 8:00 a. m. a 10:30 a. m. y 3:00 p. m. a 9:00 p. m.; sábados y domingos, 4:00 p. m. a 8:30 p. m.; festivos sin servicio.
+- `direccion`: pendiente de confirmación; se mostrará en Contacto y el pie cuando se complete.
 
-La ciudad Sahagún, Córdoba se muestra aunque esos campos estén vacíos. Cuando se publique el sitio, conviene cambiar `og:image` y `twitter:image` en `index.html` por una URL pública absoluta del logo para que las vistas previas puedan mostrarlo. Los precios y la disponibilidad deben validarse con el negocio antes de publicar.
+La ciudad Sahagún, Córdoba se muestra aunque la dirección esté vacía. El botón de WhatsApp solo abre el chat; para respuestas automáticas se necesitará configurar aparte un servicio de bot con la plataforma de WhatsApp y su servidor. No se colocan claves de API en este frontend.
+
+Cuando se publique el sitio, conviene cambiar `og:image` y `twitter:image` en `index.html` por una URL pública absoluta del logo para que las vistas previas puedan mostrarlo. Los precios y la disponibilidad deben validarse con el negocio antes de publicar.
