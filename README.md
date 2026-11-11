@@ -6,7 +6,7 @@ Aplicación frontend académica para presentar los productos de Modo Shake, en S
 
 - Catálogo de siete productos leído desde `data.json` con Fetch y `async/await`. Muestra estados de carga, error y reintento.
 - Búsqueda por nombre y filtros por categoría que actualizan las tarjetas sin recargar la página.
-- Vistas de Inicio, Catálogo, Productos, Carrito, Perfil, Nosotros y Contacto, con enlaces que permiten usar Atrás y Adelante.
+- Vistas de Inicio, Categorías, Productos, Carrito, Perfil, Nosotros y Contacto, con enlaces que permiten usar Atrás y Adelante.
 - Carrito para agregar y quitar productos, cambiar cantidades y calcular el total. La selección se conserva en `localStorage` tras recargar.
 - Formulario con validación inmediata, mensajes junto a cada campo y comprobación de la fecha. El borrador y las consultas válidas se guardan en `localStorage`, donde se pueden revisar o eliminar.
 
@@ -16,7 +16,7 @@ El total de los suplementos es estimado porque su precio depende de la cantidad.
 
 1. Abre esta carpeta en Visual Studio Code.
 2. Abre `index.html` con **Live Server**.
-3. En la página que se abre, entra a **Catálogo** o **Productos** para consultar los datos.
+3. En la página que se abre, entra a **Categorías** o **Productos** para consultar los datos.
 
 Se necesita un servidor HTTP local para que Fetch pueda leer `data.json`; abrir el archivo HTML directamente con doble clic puede impedir la carga. Las tipografías de Google Fonts y los iconos de Bootstrap Icons necesitan conexión a Internet porque se enlazan desde sus CDN.
 
@@ -64,4 +64,12 @@ Al comienzo de `app.js` está `CONFIG_NEGOCIO`. Ya incluye el WhatsApp, Instagra
 
 La ciudad Sahagún, Córdoba se muestra aunque la dirección esté vacía. El botón de WhatsApp solo abre el chat; para respuestas automáticas se necesitará configurar aparte un servicio de bot con la plataforma de WhatsApp y su servidor. No se colocan claves de API en este frontend.
 
-Cuando se publique el sitio, conviene cambiar `og:image` y `twitter:image` en `index.html` por una URL pública absoluta del logo para que las vistas previas puedan mostrarlo. Los precios y la disponibilidad deben validarse con el negocio antes de publicar.
+Las etiquetas `og:image` y `twitter:image` apuntan a `https://modoshake.netlify.app/images/logo-modoshake.jpg`; la imagen debe estar publicada allí para que se vea al compartir el sitio. Los precios y la disponibilidad deben validarse con el negocio antes de publicar.
+
+
+## Ajustes de presentación
+
+- Las fotos de productos y categorías mantienen las proporciones 4:3 y 16:10 en los tamaños revisados. La portada conserva su tratamiento visual.
+- En móviles, el encabezado queda en una fila y el menú se despliega debajo; el acceso destacado a Categorías se oculta del encabezado, pero sigue disponible en la portada y el pie.
+- Los enlaces a secciones tienen espacio respecto al encabezado fijo. El pie deja espacio para el botón flotante de WhatsApp.
+- Instagram y TikTok muestran su nombre junto al icono. Los metadatos para compartir usan la URL pública indicada arriba.
