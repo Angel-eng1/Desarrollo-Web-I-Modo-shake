@@ -1,42 +1,39 @@
-# Modo Shake — primer avance
+# Modo Shake — Desarrollo Web I
 
-Prototipo frontend estático para la propuesta de aplicación web de Modo Shake (Sahagún, Córdoba).
+Aplicación frontend académica para presentar los productos de Modo Shake, en Sahagún, Córdoba. El proyecto reúne el trabajo del primer avance (estructura HTML y diseño adaptable) y del segundo avance (interactividad con JavaScript nativo).
 
-## Alcance de esta entrega
+## Funciones del avance 2
 
-- Estructura semántica con HTML5: `header`, `nav`, `main`, `section`, `article`, `aside` y `footer`.
-- Página de inicio, menú por categorías, tarjetas de producto, información del restaurante y contacto.
-- Maquetación con CSS Grid y Flexbox, adaptada para móvil, tablet y escritorio mediante media queries.
-- Ilustración vectorial SVG local para el encabezado, tipografía de Google Fonts e iconografía de Bootstrap Icons.
-- Formulario con validación nativa del navegador: campos obligatorios, correo, patrón para teléfono, fecha y cantidad mínima/máxima.
+- Catálogo de siete productos leído desde `data.json` con Fetch y `async/await`. Muestra estados de carga, error y reintento.
+- Búsqueda por nombre y filtros por categoría que actualizan las tarjetas sin recargar la página.
+- Vistas de Inicio, Catálogo, Productos, Carrito, Nosotros y Contacto, con enlaces que permiten usar Atrás y Adelante.
+- Carrito para agregar y quitar productos, cambiar cantidades y calcular el total. La selección se conserva en `localStorage` tras recargar.
+- Formulario con validación inmediata, mensajes junto a cada campo y comprobación de la fecha. El borrador y las consultas válidas se guardan en `localStorage`, donde se pueden revisar o eliminar.
 
-## Abrir el prototipo
+El total de los suplementos es estimado porque su precio depende de la cantidad. El carrito no procesa pagos ni pedidos. Las consultas se guardan solo en el navegador utilizado; no se envían al restaurante ni a un servidor.
 
-Abre la carpeta del proyecto en Visual Studio Code y ejecuta `index.html` con Live Server. La carga de `data.json` requiere un servidor HTTP local; no abras el HTML directamente con doble clic. Se recomienda conexión a Internet para cargar la tipografía y los iconos desde sus CDN.
+## Cómo abrir el proyecto
 
-## Alcance académico
+1. Abre esta carpeta en Visual Studio Code.
+2. Abre `index.html` con **Live Server**.
+3. En la página que se abre, entra a **Catálogo** o **Productos** para consultar los datos.
 
-El primer avance consistió en HTML y CSS. En el segundo se incorporó JavaScript, catálogo dinámico, carrito y guardado local de consultas. La información del formulario no se transmite a un servidor. Según la guía, el segundo avance incorpora interacción con JavaScript y almacenamiento local; la entrega final migra a Vue.js. La propuesta original menciona React, pero el camino previsto para ajustarse a la guía de evaluación es Vue.js.
+Se necesita un servidor HTTP local para que Fetch pueda leer `data.json`; abrir el archivo HTML directamente con doble clic puede impedir la carga. Las tipografías de Google Fonts y los iconos de Bootstrap Icons necesitan conexión a Internet porque se enlazan desde sus CDN.
 
+## Organización de archivos
 
-## Avance 2 en desarrollo: catálogo dinámico
+- `index.html`: estructura semántica, navegación, tarjetas generadas y formulario.
+- `styles.css`: colores, distribución con Grid y Flexbox, vistas adaptables y animaciones.
+- `app.js`: lógica de catálogo, filtros, carrito, navegación y formulario, dividida en bloques comentados.
+- `data.json`: información de los siete productos.
+- `images/`: fotografías del logo y los productos.
 
-Los productos se almacenan en `data.json` y se cargan desde `app.js` con Fetch y async/await. JavaScript genera las tarjetas y muestra mensajes de carga, catálogo vacío o error, con una opción para reintentar. Se comprueban los estados HTTP y el formato de los datos.
+## Cómo comprobar las funciones
 
-El catálogo permite buscar por nombre y filtrar por categoría simultáneamente, sin distinguir mayúsculas ni tildes en la búsqueda. Incluye un botón para limpiar los filtros y un aviso cuando no hay coincidencias.
+- Filtra una categoría y escribe un nombre en el buscador; usa **Limpiar filtros** para volver a todos los productos.
+- Agrega productos al carrito, cambia una cantidad y recarga la página. La selección y el total deben conservarse.
+- En Contacto, intenta guardar campos vacíos o incorrectos para ver los mensajes. Escribe un borrador y recarga para comprobar que vuelve a aparecer. Completa una consulta válida, recarga y elimínala desde la lista.
 
-El carrito permite agregar productos, modificar cantidades enteras entre 1 y 99, eliminar productos y vaciar la selección. Calcula el total y guarda identificadores y cantidades en localStorage. Para suplementos muestra un total estimado. El carrito no procesa pedidos ni pagos.
+## Desarrollo académico
 
-Para comprobar la persistencia, recarga usando la misma dirección y puerto de Live Server: el almacenamiento pertenece a ese origen y navegador.
-
-El formulario muestra errores junto a cada campo mientras se escribe y exige una fecha actual o futura. Guarda el borrador y las consultas válidas en localStorage; se pueden revisar y eliminar desde la misma página. Los datos permanecen únicamente en este navegador: no se envían al restaurante ni se guardan en un servidor.
-
-## Navegación y diseño de las vistas
-
-Inicio, Catálogo, Productos, Carrito, Nosotros y Contacto se muestran como vistas independientes mediante JavaScript nativo y enlaces con hash. Se puede usar Atrás/Adelante y abrir enlaces directos a cada vista. El catálogo presenta categorías visuales que llevan a productos filtrados. Las transiciones respetan la preferencia de movimiento reducido del dispositivo.
-
-El carrito presenta imágenes, cantidades, subtotales y un resumen, con avisos al agregar productos. Estas vistas conservan HTML semántico, Grid, Flexbox y estilos adaptables; Vue Router se incorporará en la entrega final.
-
-## Organización de JavaScript
-
-Toda la lógica de carrito, catálogo, filtros, navegación y formulario está en `app.js`. Sus bloques están separados por comentarios para poder estudiar cada funcionalidad.
+El primer avance cubrió HTML5 semántico, formulario con atributos nativos, diseño adaptable y recursos externos. Este segundo avance incorpora manipulación del DOM, eventos, carga asíncrona de datos, manejo de errores, validaciones dinámicas y persistencia local. La entrega final de la guía prevé migrar la aplicación a Vue.js y publicarla.
