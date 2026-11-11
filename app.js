@@ -1,3 +1,11 @@
+// Completa estos datos solo cuando el negocio los confirme.
+const CONFIG_NEGOCIO = {
+  whatsapp: "",
+  instagram: "",
+  direccion: "",
+  horario: ""
+};
+
 // ==================================================
 // PERFILES LOCALES DE DEMOSTRACIÓN
 // ==================================================
@@ -168,6 +176,8 @@ const Carrito = (() => {
   const total = document.querySelector("#total-carrito");
   const notaPrecio = document.querySelector("#nota-precio-carrito");
   const vaciar = document.querySelector("#vaciar-carrito");
+  const botonWhatsapp = document.querySelector("#enviar-whatsapp");
+  const avisoCarrito = document.querySelector("#aviso-carrito");
   const moneda = new Intl.NumberFormat("es-CO", {
     style: "currency", currency: "COP", maximumFractionDigits: 0
   });
@@ -279,11 +289,29 @@ const Carrito = (() => {
       suma + catalogo.find(producto => producto.id === item.id).precio * item.cantidad, 0);
     const estimado = items.some(item => catalogo.find(producto => producto.id === item.id).precioDesde);
     contador.textContent = unidades;
+    contador.classList.remove("insignia-animada");
+    void contador.offsetWidth;
+    contador.classList.add("insignia-animada");
     document.querySelector(".enlace-carrito").setAttribute("aria-label",
       `Carrito, ${unidades} ${unidades === 1 ? "producto" : "productos"}`);
     total.textContent = `${estimado ? "Total estimado" : "Total"}: ${moneda.format(importe)} COP`;
     notaPrecio.hidden = !estimado;
     vaciar.disabled = items.length === 0;
+    const telefono = CONFIG_NEGOCIO.whatsapp.replace(/\D/g, "");
+    botonWhatsapp.hidden = !telefono || !items.length;
+    if (telefono && items.length) {
+      const detalle = items.map(item => {
+        const producto = catalogo.find(p => p.id === item.id);
+        return `- ${item.cantidad} × ${producto.nombre}: ${moneda.format(producto.precio * item.cantidad)} COP`;
+      }).join("\n");
+      const resumen = `Hola Modo Shake, quisiera consultar este pedido:\n${detalle}\nTotal${estimado ? " estimado" : ""}: ${moneda.format(importe)} COP`;
+      botonWhatsapp.href = `https://wa.me/${telefono}?text=${encodeURIComponent(resumen)}`;
+    } else {
+      botonWhatsapp.removeAttribute("href");
+    }
+    avisoCarrito.textContent = telefono
+      ? "El botón abre WhatsApp para consultar el pedido. Aquí no se procesan pagos."
+      : "Esta selección no realiza pedidos ni pagos.";
     document.querySelector("#carrito-vacio").hidden = items.length !== 0;
     estado.textContent = items.length ? `${unidades} ${unidades === 1 ? "unidad" : "unidades"} en tu carrito.` : "Tu carrito está vacío.";
   }
@@ -364,6 +392,7 @@ function filtrarProductos(productos, categoria, busqueda) {
 function actualizarCatalogo() {
   const resultados = filtrarProductos(productosCatalogo, categoriaSeleccionada, buscador.value);
   contenedorProductos.replaceChildren(...resultados.map(crearTarjeta));
+  document.querySelector("#sin-resultados").hidden = resultados.length > 0 || productosCatalogo.length === 0;
 
   if (productosCatalogo.length === 0) {
     estadoCatalogo.textContent = "Todavía no hay productos disponibles.";
@@ -404,6 +433,14 @@ function crearTarjeta(producto) {
   imagen.src = producto.imagen;
   imagen.alt = producto.alt;
   imagen.loading = "lazy";
+  const tamanos = { "bowl.jpg": [736, 960], "sandwich.jpg": [756, 960], "suplementos.jpg": [755, 960], "sodas.jpg": [756, 960] };
+  const [ancho, alto] = tamanos[producto.imagen.split("/").pop()] || [960, 960];
+  imagen.width = ancho;
+  imagen.height = alto;
+
+  const etiqueta = document.createElement("span");
+  etiqueta.className = "categoria-producto";
+  etiqueta.textContent = producto.categoria;
 
   const titulo = document.createElement("h3");
   titulo.textContent = producto.nombre;
@@ -425,7 +462,7 @@ function crearTarjeta(producto) {
   agregar.setAttribute("aria-label", `Agregar ${producto.nombre} al carrito`);
   agregar.addEventListener("click", () => Carrito.agregar(producto.id));
 
-  tarjeta.append(imagen, titulo, descripcion, precio, agregar);
+  tarjeta.append(imagen, etiqueta, titulo, descripcion, precio, agregar);
   return tarjeta;
 }
 
@@ -449,6 +486,13 @@ async function cargarCatalogo() {
   estadoCatalogo.classList.remove("mensaje-error");
   botonReintentar.hidden = true;
   contenedorProductos.replaceChildren();
+  document.querySelector("#sin-resultados").hidden = true;
+  for (let i = 0; i < 3; i++) {
+    const esqueleto = document.createElement("div");
+    esqueleto.className = "esqueleto-producto";
+    esqueleto.setAttribute("aria-hidden", "true");
+    contenedorProductos.append(esqueleto);
+  }
 
   try {
     const respuesta = await fetch("./data.json");
@@ -474,6 +518,7 @@ async function cargarCatalogo() {
     actualizarCatalogo();
     habilitarFiltros(true);
   } catch (error) {
+    contenedorProductos.replaceChildren();
     estadoCatalogo.textContent = error instanceof TypeError
       ? "No se pudo conectar para cargar el catálogo. Revisa tu conexión y vuelve a intentar."
       : error instanceof SyntaxError
@@ -496,6 +541,13 @@ botonesCategorias.forEach(boton => {
   });
 });
 botonLimpiar.addEventListener("click", () => {
+  buscador.value = "";
+  seleccionarCategoria("");
+  actualizarCatalogo();
+  buscador.focus();
+});
+
+document.querySelector("#reiniciar-busqueda").addEventListener("click", () => {
   buscador.value = "";
   seleccionarCategoria("");
   actualizarCatalogo();
@@ -744,3 +796,65 @@ formularioContacto.addEventListener("submit", evento => {
   mostrarConsultas();
   estadoFormulario.textContent = "Consulta guardada en este navegador. No fue enviada al restaurante.";
 });
+
+
+// ==================================================
+// MENÚ MÓVIL Y DATOS DEL NEGOCIO
+// ==================================================
+const botonMenu = document.querySelector("#abrir-menu");
+const menuPrincipal = document.querySelector("#menu-principal");
+function cerrarMenu() {
+  botonMenu.setAttribute("aria-expanded", "false");
+  botonMenu.setAttribute("aria-label", "Abrir menú");
+  menuPrincipal.classList.remove("menu-abierto");
+}
+botonMenu.addEventListener("click", () => {
+  const abierto = botonMenu.getAttribute("aria-expanded") === "true";
+  botonMenu.setAttribute("aria-expanded", String(!abierto));
+  botonMenu.setAttribute("aria-label", abierto ? "Abrir menú" : "Cerrar menú");
+  menuPrincipal.classList.toggle("menu-abierto", !abierto);
+});
+menuPrincipal.addEventListener("click", evento => {
+  if (evento.target.closest("a")) cerrarMenu();
+});
+document.addEventListener("keydown", evento => {
+  if (evento.key === "Escape" && botonMenu.getAttribute("aria-expanded") === "true") {
+    cerrarMenu();
+    botonMenu.focus();
+  }
+});
+
+const datosNegocio = document.querySelector("#datos-negocio");
+const enlacesPie = document.querySelector("#enlaces-contacto-pie");
+function agregarDato(texto, icono, href = "") {
+  const elemento = href ? document.createElement("a") : document.createElement("p");
+  if (href) {
+    elemento.href = href;
+    elemento.target = "_blank";
+    elemento.rel = "noopener noreferrer";
+  }
+  const iconoVisual = document.createElement("i");
+  iconoVisual.className = `bi ${icono}`;
+  iconoVisual.setAttribute("aria-hidden", "true");
+  elemento.append(iconoVisual, document.createTextNode(` ${texto}`));
+  datosNegocio.append(elemento);
+  enlacesPie.append(elemento.cloneNode(true));
+  document.querySelector("#contacto-pie").hidden = false;
+}
+if (CONFIG_NEGOCIO.direccion.trim()) agregarDato(CONFIG_NEGOCIO.direccion.trim(), "bi-pin-map");
+if (CONFIG_NEGOCIO.horario.trim()) agregarDato(CONFIG_NEGOCIO.horario.trim(), "bi-clock");
+const numeroNegocio = CONFIG_NEGOCIO.whatsapp.replace(/\D/g, "");
+if (numeroNegocio) agregarDato("WhatsApp", "bi-whatsapp", `https://wa.me/${numeroNegocio}`);
+const usuarioInstagram = CONFIG_NEGOCIO.instagram.trim().replace(/^@/, "");
+if (/^[a-zA-Z0-9._]{1,30}$/.test(usuarioInstagram)) {
+  agregarDato(`@${usuarioInstagram}`, "bi-instagram", `https://www.instagram.com/${usuarioInstagram}/`);
+}
+
+document.querySelector(".pie").classList.toggle("sin-contacto", document.querySelector("#contacto-pie").hidden);
+
+const encabezado = document.querySelector(".encabezado");
+function actualizarSombraEncabezado() {
+  encabezado.classList.toggle("con-sombra", window.scrollY > 8);
+}
+window.addEventListener("scroll", actualizarSombraEncabezado, { passive: true });
+actualizarSombraEncabezado();

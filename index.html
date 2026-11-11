@@ -7,7 +7,16 @@
     name="description"
     content="Conoce Modo Shake y explora nuestro catálogo de comida saludable en Sahagún, Córdoba."
   >
-  <meta name="theme-color" content="#fff4e5">
+  <meta name="theme-color" content="#fffaf1">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Modo Shake | Comida saludable en Sahagún">
+  <meta property="og:description" content="Conoce el catálogo y las opciones de Modo Shake en Sahagún, Córdoba.">
+  <meta property="og:image" content="images/logo-modoshake.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Modo Shake | Comida saludable en Sahagún">
+  <meta name="twitter:description" content="Explora el catálogo de Modo Shake.">
+  <meta name="twitter:image" content="images/logo-modoshake.jpg">
+  <link rel="icon" type="image/jpeg" href="images/logo-modoshake.jpg">
 
   <title>Modo Shake | Fit market🛒</title>
 
@@ -49,10 +58,12 @@
       <span class="marca-texto">modo<span>shake</span><small>FRESH · FIT · HAPPY</small></span>
     </a>
 
-    <nav aria-label="Navegación principal">
+    <button id="abrir-menu" class="boton-menu" type="button" aria-expanded="false" aria-controls="menu-principal" aria-label="Abrir menú">
+      <i class="bi bi-list" aria-hidden="true"></i>
+    </button>
+    <nav id="menu-principal" aria-label="Navegación principal">
       <ul>
         <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#catalogo">Catálogo</a></li>
         <li><a href="#productos">Productos</a></li>
         <li><a href="#nosotros">Nosotros</a></li>
         <li><a href="#contacto">Contacto</a></li>
@@ -104,6 +115,11 @@
         <img src="images/waffles.jpg" width="960" height="960" alt="Waffle de frutos rojos de Modo Shake">
         <figcaption>Tu pausa favorita, en Modo Shake.</figcaption>
       </figure>
+      <div class="beneficios" aria-label="Lo que nos inspira">
+        <p><i class="bi bi-leaf" aria-hidden="true"></i> Ingredientes frescos</p>
+        <p><i class="bi bi-heart" aria-hidden="true"></i> Preparado con cuidado</p>
+        <p><i class="bi bi-stars" aria-hidden="true"></i> Opciones para tu ritmo</p>
+      </div>
     </section>
 
     <section class="catalogo" id="catalogo" aria-labelledby="titulo-catalogo">
@@ -177,6 +193,12 @@
       </button>
       <noscript>Activa JavaScript para consultar el catálogo de productos.</noscript>
       <div class="productos" id="listado-productos" aria-busy="false"></div>
+      <div class="sin-resultados" id="sin-resultados" hidden>
+        <i class="bi bi-search-heart" aria-hidden="true"></i>
+        <h3>No encontramos coincidencias</h3>
+        <p>Prueba otro nombre o cambia la categoría.</p>
+        <button class="boton" id="reiniciar-busqueda" type="button">Ver todos los productos</button>
+      </div>
 
       <aside class="nota-catalogo">
         <h3>¿Buscas una opción específica?</h3>
@@ -210,7 +232,8 @@
           <p id="nota-precio-carrito" hidden>El total es estimado: el precio de los suplementos depende de la cantidad.</p>
           <a class="boton" href="#productos">Seguir explorando <i class="bi bi-plus" aria-hidden="true"></i></a>
           <button class="boton-texto" id="vaciar-carrito" type="button" disabled>Vaciar carrito</button>
-          <p class="aviso-formulario">Esta selección no realiza pedidos ni pagos.</p>
+          <a id="enviar-whatsapp" class="boton" href="#" target="_blank" rel="noopener noreferrer" hidden>Enviar pedido por WhatsApp</a>
+          <p id="aviso-carrito" class="aviso-formulario">Esta selección no realiza pedidos ni pagos.</p>
         </aside>
       </div>
     </section>
@@ -246,22 +269,19 @@
       </div>
     </section>
 
-    <section
-      class="nosotros"
-      id="nosotros"
-      aria-labelledby="titulo-nosotros"
-    >
-      <p class="etiqueta">CONOCE MODO SHAKE</p>
-
-      <h2 id="titulo-nosotros">
-        Sabor que acompaña tu bienestar
-      </h2>
-
-      <p>
-        Modo Shake es un restaurante fitness en Sahagún, Córdoba.
-        Ofrecemos batidos, waffles, pancakes, bowls y otras opciones
-        para quienes buscan disfrutar de alimentos preparados con cuidado.
-      </p>
+    <section class="nosotros" id="nosotros" aria-labelledby="titulo-nosotros">
+      <div class="nosotros-contenido">
+        <div>
+          <p class="etiqueta">CONOCE MODO SHAKE</p>
+          <h2 id="titulo-nosotros">Sabor que acompaña tu día</h2>
+          <p>Modo Shake ofrece batidos, waffles, pancakes, bowls y otras opciones en Sahagún, Córdoba. Nos gusta preparar una pausa rica para cada momento.</p>
+        </div>
+        <div class="valores" aria-label="Nuestra forma de trabajar">
+          <article><i class="bi bi-flower1" aria-hidden="true"></i><h3>Frescura</h3><p>Opciones para disfrutar a tu ritmo.</p></article>
+          <article><i class="bi bi-cup-straw" aria-hidden="true"></i><h3>Preparación cuidadosa</h3><p>Cada elección merece su momento.</p></article>
+          <article><i class="bi bi-heart" aria-hidden="true"></i><h3>Bienestar</h3><p>Una pausa que disfrutas.</p></article>
+        </div>
+      </div>
     </section>
 
     <section
@@ -274,6 +294,11 @@
       <h2 id="titulo-contacto">Contáctanos</h2>
 
       <p>Déjanos tus datos y cuéntanos qué necesitas.</p>
+      <aside class="ubicacion-negocio" aria-labelledby="titulo-ubicacion">
+        <h3 id="titulo-ubicacion"><i class="bi bi-geo-alt" aria-hidden="true"></i> Dónde encontrarnos</h3>
+        <p>Sahagún, Córdoba</p>
+        <div id="datos-negocio"></div>
+      </aside>
 
       <form id="formulario-contacto" novalidate>
         <div class="campo-formulario"><label for="nombre">Nombre completo</label>
@@ -305,15 +330,15 @@
           title="Escribe 10 números, sin espacios"
           autocomplete="tel"
           required
-        ></div>
+        ><small class="ayuda-campo">10 números, sin espacios.</small></div>
 
-        <div class="campo-formulario"><label for="fecha">Fecha preferida de visita</label>
+        <div class="campo-formulario"><label for="fecha">Fecha en que nos visitarás</label>
         <input
           type="date"
           id="fecha"
           name="fecha"
           required
-        ></div>
+        ><small class="ayuda-campo">Elige una fecha de hoy o posterior.</small></div>
 
         <div class="campo-formulario"><label for="personas">Número de personas</label>
         <input
@@ -323,7 +348,7 @@
           min="1"
           max="12"
           required
-        ></div>
+        ><small class="ayuda-campo">De 1 a 12 personas.</small></div>
 
         <div class="campo-formulario"><label for="motivo">Motivo de tu consulta</label>
         <select id="motivo" name="motivo" required>
@@ -353,11 +378,11 @@
         Tu consulta se guarda únicamente en este navegador. No se envía al restaurante.
       </p>
       <p id="estado-formulario" role="status" aria-live="polite"></p>
-      <section class="consultas-guardadas" aria-labelledby="titulo-consultas">
-        <h3 id="titulo-consultas">Consultas guardadas en este navegador</h3>
+      <details class="consultas-guardadas">
+        <summary id="titulo-consultas">Consultas guardadas en este navegador</summary>
         <p>Podrás revisarlas al volver a abrir esta página en el mismo navegador.</p>
         <ul id="lista-consultas"></ul>
-      </section>
+      </details>
     </section>
   </main>
 
@@ -367,20 +392,13 @@
   </div>
 
   <footer class="pie">
-    <a href="#inicio">Modo Shake</a>
-    <p>Sabor saludable en Sahagún, Córdoba.</p>
-
-    <nav aria-label="Enlaces del pie de página">
-      <ul>
-        <li><a href="#inicio">Inicio</a></li>
-        <li><a href="#catalogo">Catálogo</a></li>
-        <li><a href="#nosotros">Nosotros</a></li>
-        <li><a href="#contacto">Contacto</a></li>
-      </ul>
-    </nav>
-
-    <small>© 2026 Modo Shake. Proyecto académico.</small>
+    <div><a class="pie-marca" href="#inicio">Modo Shake</a><p>Sabor saludable en Sahagún, Córdoba.</p></div>
+    <nav aria-label="Enlaces del pie de página"><h2>Explora</h2><ul>
+      <li><a href="#inicio">Inicio</a></li><li><a href="#catalogo">Catálogo</a></li>
+      <li><a href="#productos">Productos</a></li><li><a href="#contacto">Contacto</a></li>
+    </ul></nav>
+    <div id="contacto-pie" hidden><h2>Contacto</h2><div id="enlaces-contacto-pie"></div></div>
+    <small>© 2026 Modo Shake · Proyecto académico.</small>
   </footer>
 </body>
 </html>
-
