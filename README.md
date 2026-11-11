@@ -21,8 +21,22 @@ En este primer avance no se incluye JavaScript, persistencia, carrito funcional 
 
 ## Avance 2 en desarrollo: catálogo dinámico
 
-Los productos se almacenan en `data.json` y se cargan desde `catalogo.js` con Fetch y async/await. JavaScript genera las tarjetas y muestra mensajes de carga, catálogo vacío o error, con una opción para reintentar. Se comprueban los estados HTTP y el formato de los datos.
+Los productos se almacenan en `data.json` y se cargan desde `app.js` con Fetch y async/await. JavaScript genera las tarjetas y muestra mensajes de carga, catálogo vacío o error, con una opción para reintentar. Se comprueban los estados HTTP y el formato de los datos.
 
 El catálogo permite buscar por nombre y filtrar por categoría simultáneamente, sin distinguir mayúsculas ni tildes en la búsqueda. Incluye un botón para limpiar los filtros y un aviso cuando no hay coincidencias.
 
-Todavía están pendientes el carrito y la persistencia y validación dinámica del formulario.
+El carrito permite agregar productos, modificar cantidades enteras entre 1 y 99, eliminar productos y vaciar la selección. Calcula el total y guarda identificadores y cantidades en localStorage. Para suplementos muestra un total estimado. El carrito no procesa pedidos ni pagos.
+
+Para comprobar la persistencia, recarga usando la misma dirección y puerto de Live Server: el almacenamiento pertenece a ese origen y navegador.
+
+Todavía están pendientes la persistencia y validación dinámica del formulario.
+
+## Navegación y diseño de las vistas
+
+Inicio, Catálogo, Productos, Carrito, Nosotros y Contacto se muestran como vistas independientes mediante JavaScript nativo y enlaces con hash. Se puede usar Atrás/Adelante y abrir enlaces directos a cada vista. El catálogo presenta categorías visuales que llevan a productos filtrados. Las transiciones respetan la preferencia de movimiento reducido del dispositivo.
+
+El carrito presenta imágenes, cantidades, subtotales y un resumen, con avisos al agregar productos. Estas vistas conservan HTML semántico, Grid, Flexbox y estilos adaptables; Vue Router se incorporará en la entrega final.
+
+## Organización de JavaScript
+
+Toda la lógica de carrito, catálogo, filtros y navegación está en `app.js`. Sus bloques están separados por comentarios para poder estudiar cada funcionalidad.

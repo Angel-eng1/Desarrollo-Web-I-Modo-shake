@@ -27,7 +27,7 @@
 
   <!-- Hoja de estilos del proyecto -->
   <link rel="stylesheet" href="styles.css">
-  <script src="catalogo.js" defer></script>
+  <script src="app.js" defer></script>
 </head>
 
 <body>
@@ -48,6 +48,7 @@
         width="72"
         height="72"
       >
+      <span class="marca-texto">modo<span>shake</span><small>FRESH · FIT · HAPPY</small></span>
     </a>
 
     <nav aria-label="Navegación principal">
@@ -55,6 +56,7 @@
         <li><a href="#inicio">Inicio</a></li>
         <li><a href="#catalogo">Catálogo</a></li>
         <li><a href="#productos">Productos</a></li>
+        <li><a href="#carrito">Carrito <span id="contador-carrito" class="insignia">0</span></a></li>
         <li><a href="#nosotros">Nosotros</a></li>
         <li><a href="#contacto">Contacto</a></li>
       </ul>
@@ -72,6 +74,7 @@
       id="inicio"
       aria-labelledby="titulo-inicio"
     >
+      <div class="portada-texto">
       <p class="etiqueta">Hecho con ingredientes que te hacen bien</p>
 
       <h1 id="titulo-inicio">
@@ -89,36 +92,76 @@
         Ver catálogo
         <i class="bi bi-arrow-right" aria-hidden="true"></i>
       </a>
+      </div>
+      <figure class="portada-foto">
+        <img src="images/waffles.jpg" alt="Waffle de frutos rojos de Modo Shake">
+        <figcaption>Tu pausa favorita, en Modo Shake.</figcaption>
+      </figure>
     </section>
 
-    <section
-      class="catalogo"
-      id="catalogo"
-      aria-labelledby="titulo-catalogo"
-    >
-      <p class="etiqueta">PARA CADA ANTOJO</p>
+    <section class="catalogo" id="catalogo" aria-labelledby="titulo-catalogo">
+      <p class="etiqueta">ENCUENTRA TU FAVORITO</p>
+      <h2 id="titulo-catalogo">Un antojo, muchas opciones.</h2>
+      <p>Elige una categoría y descubre lo que tenemos para ti.</p>
+      <div class="categorias-visuales">
+        <a class="categoria-visual" href="#productos" data-elegir-categoria="Batidos">
+          <img src="images/batido de fresa.jpg" alt="" loading="lazy">
+          <span><strong>Batidos</strong><small>Frescura en cada sorbo</small></span>
+          <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+        </a>
+        <a class="categoria-visual" href="#productos" data-elegir-categoria="Waffles">
+          <img src="images/waffles.jpg" alt="" loading="lazy">
+          <span><strong>Waffles</strong><small>Tu pausa más dulce</small></span>
+          <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+        </a>
+        <a class="categoria-visual" href="#productos" data-elegir-categoria="Pancakes">
+          <img src="images/pancake.jpg" alt="" loading="lazy">
+          <span><strong>Pancakes</strong><small>Empieza con algo rico</small></span>
+          <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+        </a>
+        <a class="categoria-visual" href="#productos" data-elegir-categoria="Bowls">
+          <img src="images/bowl.jpg" alt="" loading="lazy">
+          <span><strong>Bowls</strong><small>Color y sabor en tu mesa</small></span>
+          <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+        </a>
+        <a class="categoria-visual" href="#productos" data-elegir-categoria="Sándwiches">
+          <img src="images/sandwich.jpg" alt="" loading="lazy">
+          <span><strong>Sándwiches</strong><small>Una pausa salada</small></span>
+          <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+        </a>
+        <a class="categoria-visual" href="#productos" data-elegir-categoria="Suplementos">
+          <img src="images/suplementos.jpg" alt="" loading="lazy">
+          <span><strong>Suplementos</strong><small>Complementa tu rutina</small></span>
+          <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+        </a>
+        <a class="categoria-visual" href="#productos" data-elegir-categoria="Sodas">
+          <img src="images/sodas.jpg" alt="" loading="lazy">
+          <span><strong>Sodas</strong><small>Dale frescura a tu día</small></span>
+          <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
+        </a>
+      </div>
+      <a class="boton" href="#productos" data-elegir-categoria="">Ver todos los productos <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+    </section>
 
-      <h2 id="titulo-catalogo">Explora nuestro catálogo</h2>
-
-      <p>
-        Descubre opciones preparadas para disfrutar y acompañar tu día.
-      </p>
-
+    <section class="catalogo" id="productos" aria-labelledby="titulo-productos">
+      <p class="etiqueta">PREPARADOS PARA TU DÍA</p>
+      <h2 id="titulo-productos">Elige algo que te encante.</h2>
+      <p>Busca tu favorito y agrégalo a tu selección.</p>
       <div class="busqueda-catalogo">
-        <label for="buscar-producto">Buscar por nombre</label>
-        <input type="search" id="buscar-producto" placeholder="Por ejemplo: batido" aria-controls="productos" disabled>
+        <div class="campo-formulario"><label for="buscar-producto">Buscar por nombre</label>
+        <input type="search" id="buscar-producto" placeholder="Por ejemplo: batido" aria-controls="listado-productos" disabled></div>
         <button class="boton" id="limpiar-filtros" type="button" disabled>Limpiar filtros</button>
       </div>
 
       <ul class="categorias" aria-label="Categorías de productos">
-        <li><button type="button" data-categoria="" aria-pressed="true" aria-controls="productos" disabled>Todas</button></li>
-        <li><button type="button" data-categoria="Batidos" aria-pressed="false" aria-controls="productos" disabled>Batidos</button></li>
-        <li><button type="button" data-categoria="Waffles" aria-pressed="false" aria-controls="productos" disabled>Waffles</button></li>
-        <li><button type="button" data-categoria="Pancakes" aria-pressed="false" aria-controls="productos" disabled>Pancakes</button></li>
-        <li><button type="button" data-categoria="Bowls" aria-pressed="false" aria-controls="productos" disabled>Bowls</button></li>
-        <li><button type="button" data-categoria="Sándwiches" aria-pressed="false" aria-controls="productos" disabled>Sándwiches</button></li>
-        <li><button type="button" data-categoria="Suplementos" aria-pressed="false" aria-controls="productos" disabled>Suplementos</button></li>
-        <li><button type="button" data-categoria="Sodas" aria-pressed="false" aria-controls="productos" disabled>Sodas</button></li>
+        <li><button type="button" data-categoria="" aria-pressed="true" aria-controls="listado-productos" disabled>Todas</button></li>
+        <li><button type="button" data-categoria="Batidos" aria-pressed="false" aria-controls="listado-productos" disabled>Batidos</button></li>
+        <li><button type="button" data-categoria="Waffles" aria-pressed="false" aria-controls="listado-productos" disabled>Waffles</button></li>
+        <li><button type="button" data-categoria="Pancakes" aria-pressed="false" aria-controls="listado-productos" disabled>Pancakes</button></li>
+        <li><button type="button" data-categoria="Bowls" aria-pressed="false" aria-controls="listado-productos" disabled>Bowls</button></li>
+        <li><button type="button" data-categoria="Sándwiches" aria-pressed="false" aria-controls="listado-productos" disabled>Sándwiches</button></li>
+        <li><button type="button" data-categoria="Suplementos" aria-pressed="false" aria-controls="listado-productos" disabled>Suplementos</button></li>
+        <li><button type="button" data-categoria="Sodas" aria-pressed="false" aria-controls="listado-productos" disabled>Sodas</button></li>
       </ul>
 
       <p id="estado-catalogo" role="status" aria-live="polite"></p>
@@ -126,7 +169,7 @@
         Reintentar carga
       </button>
       <noscript>Activa JavaScript para consultar el catálogo de productos.</noscript>
-      <div class="productos" id="productos" aria-busy="false"></div>
+      <div class="productos" id="listado-productos" aria-busy="false"></div>
 
       <aside class="nota-catalogo">
         <h3>¿Buscas una opción específica?</h3>
@@ -135,6 +178,34 @@
         </p>
         <a href="#contacto">Hacer una consulta</a>
       </aside>
+    </section>
+
+    <section class="carrito" id="carrito" aria-labelledby="titulo-carrito">
+      <p class="etiqueta">TU MOMENTO, TU ELECCIÓN</p>
+      <h2 id="titulo-carrito" tabindex="-1">Todo lo que se te antojó.</h2>
+      <p id="estado-carrito" role="status" aria-live="polite">El carrito estará disponible al cargar el catálogo.</p>
+      <p id="aviso-guardado" role="status"></p>
+      <div class="carrito-distribucion">
+        <div>
+          <div class="carrito-vacio" id="carrito-vacio" hidden>
+            <span class="icono-vacio"><i class="bi bi-bag-heart" aria-hidden="true"></i></span>
+            <h3>Algo rico te está esperando.</h3>
+            <p>Explora nuestros productos y arma tu selección favorita.</p>
+            <a class="boton" href="#productos">Descubrir productos <i class="bi bi-arrow-right" aria-hidden="true"></i></a>
+          </div>
+          <ul id="lista-carrito" class="lista-carrito"></ul>
+        </div>
+        <aside class="resumen-carrito" aria-labelledby="titulo-resumen">
+          <p class="etiqueta">MODO SHAKE</p>
+          <h3 id="titulo-resumen">Tu selección</h3>
+          <p>Productos elegidos, en un solo lugar.</p>
+          <p class="total-carrito" id="total-carrito">Total: $0 COP</p>
+          <p id="nota-precio-carrito" hidden>El total es estimado: el precio de los suplementos depende de la cantidad.</p>
+          <a class="boton" href="#productos">Seguir explorando <i class="bi bi-plus" aria-hidden="true"></i></a>
+          <button class="boton-texto" id="vaciar-carrito" type="button" disabled>Vaciar carrito</button>
+          <p class="aviso-formulario">Esta selección no realiza pedidos ni pagos.</p>
+        </aside>
+      </div>
     </section>
 
     <section
@@ -167,7 +238,7 @@
       <p>Déjanos tus datos y cuéntanos qué necesitas.</p>
 
       <form>
-        <label for="nombre">Nombre completo</label>
+        <div class="campo-formulario"><label for="nombre">Nombre completo</label>
         <input
           type="text"
           id="nombre"
@@ -176,18 +247,18 @@
           maxlength="60"
           autocomplete="name"
           required
-        >
+        ></div>
 
-        <label for="correo">Correo electrónico</label>
+        <div class="campo-formulario"><label for="correo">Correo electrónico</label>
         <input
           type="email"
           id="correo"
           name="correo"
           autocomplete="email"
           required
-        >
+        ></div>
 
-        <label for="telefono">Teléfono</label>
+        <div class="campo-formulario"><label for="telefono">Teléfono</label>
         <input
           type="tel"
           id="telefono"
@@ -196,17 +267,17 @@
           title="Escribe 10 números, sin espacios"
           autocomplete="tel"
           required
-        >
+        ></div>
 
-        <label for="fecha">Fecha preferida de visita</label>
+        <div class="campo-formulario"><label for="fecha">Fecha preferida de visita</label>
         <input
           type="date"
           id="fecha"
           name="fecha"
           required
-        >
+        ></div>
 
-        <label for="personas">Número de personas</label>
+        <div class="campo-formulario"><label for="personas">Número de personas</label>
         <input
           type="number"
           id="personas"
@@ -214,9 +285,9 @@
           min="1"
           max="12"
           required
-        >
+        ></div>
 
-        <label for="motivo">Motivo de tu consulta</label>
+        <div class="campo-formulario"><label for="motivo">Motivo de tu consulta</label>
         <select id="motivo" name="motivo" required>
           <option value="" selected disabled>
             Selecciona una opción
@@ -224,15 +295,15 @@
           <option value="menu">Consultar el menú</option>
           <option value="ubicacion">Consultar ubicación u horario</option>
           <option value="otro">Otro</option>
-        </select>
+        </select></div>
 
-        <label for="mensaje">Mensaje</label>
+        <div class="campo-formulario"><label for="mensaje">Mensaje</label>
         <textarea
           id="mensaje"
           name="mensaje"
           rows="4"
           maxlength="400"
-        ></textarea>
+        ></textarea></div>
 
         <button class="boton" type="submit">
           Enviar consulta
@@ -245,6 +316,11 @@
       </p>
     </section>
   </main>
+
+  <div class="aviso-flotante" id="aviso-flotante" hidden>
+    <span id="texto-aviso" role="status" aria-live="polite"></span>
+    <a href="#carrito">Ver carrito →</a>
+  </div>
 
   <footer class="pie">
     <a href="#inicio">Modo Shake</a>
