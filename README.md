@@ -27,7 +27,6 @@ Se necesita un servidor HTTP local para que Fetch pueda leer `data.json`; abrir 
 - `app.js`: lógica de catálogo, filtros, carrito, navegación y formulario, dividida en bloques comentados.
 - `data.json`: información de los siete productos.
 - `images/`: fotografías del logo y los productos.
-- `docs/informe-avance-2.md`: informe académico del segundo avance.
 
 ## Cómo comprobar las funciones
 
