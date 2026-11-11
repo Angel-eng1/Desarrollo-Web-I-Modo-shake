@@ -855,11 +855,11 @@ if (numeroNegocio) {
 }
 const usuarioInstagram = CONFIG_NEGOCIO.instagram.trim().replace(/^@/, "");
 if (/^[a-zA-Z0-9._]{1,30}$/.test(usuarioInstagram)) {
-  agregarDato(`@${usuarioInstagram}`, "bi-instagram", `https://www.instagram.com/${usuarioInstagram}/`);
+  agregarDato(`Instagram: @${usuarioInstagram}`, "bi-instagram", `https://www.instagram.com/${usuarioInstagram}/`);
 }
 const usuarioTiktok = CONFIG_NEGOCIO.tiktok.trim().replace(/^@/, "");
 if (/^[a-zA-Z0-9._]{1,30}$/.test(usuarioTiktok)) {
-  agregarDato(`@${usuarioTiktok}`, "bi-tiktok", `https://www.tiktok.com/@${usuarioTiktok}`);
+  agregarDato(`TikTok: @${usuarioTiktok}`, "bi-tiktok", `https://www.tiktok.com/@${usuarioTiktok}`);
 }
 
 document.querySelector(".pie").classList.toggle("sin-contacto", document.querySelector("#contacto-pie").hidden);
