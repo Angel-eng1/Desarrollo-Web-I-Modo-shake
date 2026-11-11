@@ -1,9 +1,10 @@
-// Completa estos datos solo cuando el negocio los confirme.
+// Datos públicos proporcionados por el negocio; la dirección sigue pendiente.
 const CONFIG_NEGOCIO = {
-  whatsapp: "",
-  instagram: "",
+  whatsapp: "573218794687",
+  instagram: "modoshake",
+  tiktok: "modoshake",
   direccion: "",
-  horario: ""
+  horario: "Lunes a viernes: 8:00 a. m. – 10:30 a. m. y 3:00 p. m. – 9:00 p. m.\nSábados y domingos: 4:00 p. m. – 8:30 p. m.\nFestivos: no hay servicio."
 };
 
 // ==================================================
@@ -309,9 +310,11 @@ const Carrito = (() => {
     } else {
       botonWhatsapp.removeAttribute("href");
     }
-    avisoCarrito.textContent = telefono
+    avisoCarrito.textContent = telefono && items.length
       ? "El botón abre WhatsApp para consultar el pedido. Aquí no se procesan pagos."
-      : "Esta selección no realiza pedidos ni pagos.";
+      : telefono
+        ? "Agrega productos para preparar tu consulta por WhatsApp. Aquí no se procesan pagos."
+        : "Esta selección no realiza pedidos ni pagos.";
     document.querySelector("#carrito-vacio").hidden = items.length !== 0;
     estado.textContent = items.length ? `${unidades} ${unidades === 1 ? "unidad" : "unidades"} en tu carrito.` : "Tu carrito está vacío.";
   }
@@ -844,10 +847,19 @@ function agregarDato(texto, icono, href = "") {
 if (CONFIG_NEGOCIO.direccion.trim()) agregarDato(CONFIG_NEGOCIO.direccion.trim(), "bi-pin-map");
 if (CONFIG_NEGOCIO.horario.trim()) agregarDato(CONFIG_NEGOCIO.horario.trim(), "bi-clock");
 const numeroNegocio = CONFIG_NEGOCIO.whatsapp.replace(/\D/g, "");
-if (numeroNegocio) agregarDato("WhatsApp", "bi-whatsapp", `https://wa.me/${numeroNegocio}`);
+if (numeroNegocio) {
+  agregarDato("WhatsApp: +57 321 879 4687", "bi-whatsapp", `https://wa.me/${numeroNegocio}`);
+  const enlaceFlotante = document.querySelector("#whatsapp-flotante");
+  enlaceFlotante.href = `https://wa.me/${numeroNegocio}?text=${encodeURIComponent("Hola, quisiera información sobre Modo Shake.")}`;
+  enlaceFlotante.hidden = false;
+}
 const usuarioInstagram = CONFIG_NEGOCIO.instagram.trim().replace(/^@/, "");
 if (/^[a-zA-Z0-9._]{1,30}$/.test(usuarioInstagram)) {
   agregarDato(`@${usuarioInstagram}`, "bi-instagram", `https://www.instagram.com/${usuarioInstagram}/`);
+}
+const usuarioTiktok = CONFIG_NEGOCIO.tiktok.trim().replace(/^@/, "");
+if (/^[a-zA-Z0-9._]{1,30}$/.test(usuarioTiktok)) {
+  agregarDato(`@${usuarioTiktok}`, "bi-tiktok", `https://www.tiktok.com/@${usuarioTiktok}`);
 }
 
 document.querySelector(".pie").classList.toggle("sin-contacto", document.querySelector("#contacto-pie").hidden);
