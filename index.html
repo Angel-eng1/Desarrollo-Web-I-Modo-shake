@@ -104,14 +104,21 @@
         Descubre opciones preparadas para disfrutar y acompañar tu día.
       </p>
 
+      <div class="busqueda-catalogo">
+        <label for="buscar-producto">Buscar por nombre</label>
+        <input type="search" id="buscar-producto" placeholder="Por ejemplo: batido" aria-controls="productos" disabled>
+        <button class="boton" id="limpiar-filtros" type="button" disabled>Limpiar filtros</button>
+      </div>
+
       <ul class="categorias" aria-label="Categorías de productos">
-        <li>Batidos</li>
-        <li>Waffles</li>
-        <li>Pancakes</li>
-        <li>Bowls</li>
-        <li>Sándwiches</li>
-        <li>Suplementos</li>
-        <li>Sodas</li>
+        <li><button type="button" data-categoria="" aria-pressed="true" aria-controls="productos" disabled>Todas</button></li>
+        <li><button type="button" data-categoria="Batidos" aria-pressed="false" aria-controls="productos" disabled>Batidos</button></li>
+        <li><button type="button" data-categoria="Waffles" aria-pressed="false" aria-controls="productos" disabled>Waffles</button></li>
+        <li><button type="button" data-categoria="Pancakes" aria-pressed="false" aria-controls="productos" disabled>Pancakes</button></li>
+        <li><button type="button" data-categoria="Bowls" aria-pressed="false" aria-controls="productos" disabled>Bowls</button></li>
+        <li><button type="button" data-categoria="Sándwiches" aria-pressed="false" aria-controls="productos" disabled>Sándwiches</button></li>
+        <li><button type="button" data-categoria="Suplementos" aria-pressed="false" aria-controls="productos" disabled>Suplementos</button></li>
+        <li><button type="button" data-categoria="Sodas" aria-pressed="false" aria-controls="productos" disabled>Sodas</button></li>
       </ul>
 
       <p id="estado-catalogo" role="status" aria-live="polite"></p>

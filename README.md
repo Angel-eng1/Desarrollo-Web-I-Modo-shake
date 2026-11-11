@@ -23,4 +23,6 @@ En este primer avance no se incluye JavaScript, persistencia, carrito funcional 
 
 Los productos se almacenan en `data.json` y se cargan desde `catalogo.js` con Fetch y async/await. JavaScript genera las tarjetas y muestra mensajes de carga, catálogo vacío o error, con una opción para reintentar. Se comprueban los estados HTTP y el formato de los datos.
 
-En este bloque todavía están pendientes los filtros, el carrito y la persistencia y validación dinámica del formulario.
+El catálogo permite buscar por nombre y filtrar por categoría simultáneamente, sin distinguir mayúsculas ni tildes en la búsqueda. Incluye un botón para limpiar los filtros y un aviso cuando no hay coincidencias.
+
+Todavía están pendientes el carrito y la persistencia y validación dinámica del formulario.

@@ -3,6 +3,52 @@ const contenedorProductos = document.querySelector("#productos");
 const estadoCatalogo = document.querySelector("#estado-catalogo");
 const botonReintentar = document.querySelector("#reintentar-catalogo");
 
+const buscador = document.querySelector("#buscar-producto");
+const botonLimpiar = document.querySelector("#limpiar-filtros");
+const botonesCategorias = document.querySelectorAll("[data-categoria]");
+
+// Conservamos todos los productos; filtrar solo cambia los que mostramos.
+let productosCatalogo = [];
+let categoriaSeleccionada = "";
+
+function normalizarTexto(texto) {
+  return texto.trim().toLocaleLowerCase("es").normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+function filtrarProductos(productos, categoria, busqueda) {
+  const termino = normalizarTexto(busqueda);
+  return productos.filter(producto =>
+    (!categoria || producto.categoria === categoria) &&
+    normalizarTexto(producto.nombre).includes(termino)
+  );
+}
+
+function actualizarCatalogo() {
+  const resultados = filtrarProductos(productosCatalogo, categoriaSeleccionada, buscador.value);
+  contenedorProductos.replaceChildren(...resultados.map(crearTarjeta));
+
+  if (productosCatalogo.length === 0) {
+    estadoCatalogo.textContent = "Todavía no hay productos disponibles.";
+  } else if (resultados.length === 0) {
+    estadoCatalogo.textContent = "No encontramos productos con esos filtros. Prueba otro nombre o limpia los filtros.";
+  } else {
+    estadoCatalogo.textContent = `${resultados.length} ${resultados.length === 1 ? "producto encontrado" : "productos encontrados"}.`;
+  }
+}
+
+function seleccionarCategoria(categoria) {
+  categoriaSeleccionada = categoria;
+  botonesCategorias.forEach(boton => {
+    boton.setAttribute("aria-pressed", String(boton.dataset.categoria === categoria));
+  });
+}
+
+function habilitarFiltros(habilitados) {
+  buscador.disabled = !habilitados;
+  botonLimpiar.disabled = !habilitados;
+  botonesCategorias.forEach(boton => { boton.disabled = !habilitados; });
+}
+
 const formatoPrecio = new Intl.NumberFormat("es-CO", {
   style: "currency",
   currency: "COP",
@@ -51,6 +97,7 @@ function validarProductos(datos) {
 }
 
 async function cargarCatalogo() {
+  habilitarFiltros(false);
   contenedorProductos.setAttribute("aria-busy", "true");
   estadoCatalogo.textContent = "Cargando productos…";
   estadoCatalogo.classList.remove("mensaje-error");
@@ -76,11 +123,9 @@ async function cargarCatalogo() {
       throw new Error("Los datos del catálogo no tienen el formato esperado.");
     }
 
-    const tarjetas = productos.map(crearTarjeta);
-    contenedorProductos.replaceChildren(...tarjetas);
-    estadoCatalogo.textContent = productos.length
-      ? `${productos.length} productos disponibles.`
-      : "Todavía no hay productos disponibles.";
+    productosCatalogo = productos;
+    actualizarCatalogo();
+    habilitarFiltros(true);
   } catch (error) {
     estadoCatalogo.textContent = error instanceof TypeError
       ? "No se pudo conectar para cargar el catálogo. Revisa tu conexión y vuelve a intentar."
@@ -94,6 +139,21 @@ async function cargarCatalogo() {
     contenedorProductos.setAttribute("aria-busy", "false");
   }
 }
+
+// input responde mientras escribes; click cambia la categoría sin recargar.
+buscador.addEventListener("input", actualizarCatalogo);
+botonesCategorias.forEach(boton => {
+  boton.addEventListener("click", () => {
+    seleccionarCategoria(boton.dataset.categoria);
+    actualizarCatalogo();
+  });
+});
+botonLimpiar.addEventListener("click", () => {
+  buscador.value = "";
+  seleccionarCategoria("");
+  actualizarCatalogo();
+  buscador.focus();
+});
 
 botonReintentar.addEventListener("click", cargarCatalogo);
 cargarCatalogo();
