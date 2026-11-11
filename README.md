@@ -44,13 +44,13 @@ El icono de perfil del encabezado permite crear un perfil con nombre y correo o 
 
 Esta función demuestra el flujo de registro e ingreso en el cliente. No usa contraseñas ni verifica identidades, por lo que no representa una cuenta segura ni funciona entre dispositivos. Los perfiles y carritos quedan guardados únicamente en localStorage.
 
-## Mejoras de interfaz en esta rama
+## Mejoras de interfaz
 
-- Encabezado fijo al desplazarse, navegación activa y menú móvil accesible que se cierra con Escape.
-- Portada con fotografía y beneficios breves; tarjetas de producto uniformes, búsqueda compacta, filtros desplazables y estado visual cuando no hay resultados o mientras carga el catálogo.
-- Carrito con resumen de pedido y aviso coherente con la configuración de WhatsApp.
-- Secciones Nosotros y Contacto reorganizadas, formulario con ayudas y consultas locales dentro de un panel plegable.
-- Imágenes optimizadas y renombradas con minúsculas y guiones (por ejemplo, `images/logo-modoshake.jpg` y `images/batido-fresa.jpg`); referencias actualizadas en HTML y datos. También se agregó favicon y etiquetas para compartir el sitio.
+- El encabezado permanece visible al desplazarse, marca la vista activa y ofrece un menú accesible hasta 900 px. El menú se cierra con Escape o al elegir un enlace.
+- La portada presenta una fotografía, beneficios breves y el enlace principal «Ver categorías». Las tarjetas mantienen una proporción uniforme y la búsqueda ofrece filtros desplazables, estado vacío y carga visual.
+- El carrito muestra un resumen y un aviso acorde con la configuración de WhatsApp.
+- Nosotros y Contacto presentan la información en bloques legibles; el formulario muestra ayudas y permite revisar las consultas locales en un panel plegable.
+- Las imágenes usan nombres en minúsculas con guiones (por ejemplo, `images/logo-modoshake.jpg` y `images/batido-fresa.jpg`). El sitio incluye favicon y etiquetas para compartir.
 
 ## Datos del negocio por completar
 
@@ -62,7 +62,7 @@ Al comienzo de `app.js` está `CONFIG_NEGOCIO`. Ya incluye el WhatsApp, Instagra
 - `horario`: lunes a viernes, 8:00 a. m. a 10:30 a. m. y 3:00 p. m. a 9:00 p. m.; sábados y domingos, 4:00 p. m. a 8:30 p. m.; festivos sin servicio.
 - `direccion`: pendiente de confirmación; se mostrará en Contacto y el pie cuando se complete.
 
-La ciudad Sahagún, Córdoba se muestra aunque la dirección esté vacía. El botón de WhatsApp solo abre el chat; para respuestas automáticas se necesitará configurar aparte un servicio de bot con la plataforma de WhatsApp y su servidor. No se colocan claves de API en este frontend.
+La ciudad Sahagún, Córdoba se muestra aunque la dirección esté vacía. En ese caso, Contacto y el pie ofrecen un enlace de WhatsApp para preguntar cómo llegar, sin mostrar mapa ni dirección. El botón de WhatsApp solo abre el chat; para respuestas automáticas se necesitará configurar aparte un servicio de bot con la plataforma de WhatsApp y su servidor. No se colocan claves de API en este frontend.
 
 Las etiquetas `og:image` y `twitter:image` apuntan a `https://modoshake.netlify.app/images/logo-modoshake.jpg`; la imagen debe estar publicada allí para que se vea al compartir el sitio. Los precios y la disponibilidad deben validarse con el negocio antes de publicar.
 
@@ -70,6 +70,6 @@ Las etiquetas `og:image` y `twitter:image` apuntan a `https://modoshake.netlify.
 ## Ajustes de presentación
 
 - Las fotos de productos y categorías mantienen las proporciones 4:3 y 16:10 en los tamaños revisados. La portada conserva su tratamiento visual.
-- En móviles, el encabezado queda en una fila y el menú se despliega debajo; el acceso destacado a Categorías se oculta del encabezado, pero sigue disponible en la portada y el pie.
+- Hasta 900 px, el encabezado queda en una fila y el menú se despliega debajo. El enlace principal a Categorías está en la portada; el pie ofrece otro acceso.
 - Los enlaces a secciones tienen espacio respecto al encabezado fijo. El pie deja espacio para el botón flotante de WhatsApp.
 - Instagram y TikTok muestran su nombre junto al icono. Los metadatos para compartir usan la URL pública indicada arriba.

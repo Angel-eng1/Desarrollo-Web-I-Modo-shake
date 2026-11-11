@@ -80,6 +80,9 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   outline:3px solid var(--verde);
   outline-offset:3px;
 }
+[tabindex="-1"]:focus {
+  outline:none;
+}
 [hidden] {
   display:none !important;
 }
@@ -239,10 +242,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,te
   flex:0 0 auto;
   align-items:center;
   gap:var(--s2);
-}
-.acciones-encabezado > .boton {
-  font-size:.85rem;
-  white-space:nowrap;
 }
 .enlace-carrito,.enlace-perfil,.boton-menu {
   position:relative;
@@ -939,58 +938,18 @@ main > section:not([hidden]) {
 }
 
 /* Responsive */
-@media (max-width:1050px) {
-  html {
-    scroll-padding-top:150px;
-  }
-  .encabezado {
-    flex-wrap:wrap;
-  }
-  .encabezado nav {
-    order:3;
-    width:100%;
-  }
-  .encabezado nav ul {
-    justify-content:center;
-    margin:0;
-  }
-  .acciones-encabezado {
-    margin-left:auto;
-  }
-}
 @media (max-width:900px) {
-  .productos,.categorias-visuales {
-    grid-template-columns:repeat(2,minmax(0,1fr));
-  }
-  .carrito-distribucion,.nosotros-contenido {
-    grid-template-columns:1fr;
-  }
-  .resumen-carrito {
-    position:static;
-  }
-}
-@media (max-width:600px) {
   html {
-    scroll-padding-top:76px;
+    scroll-padding-top:96px;
   }
   .encabezado {
     flex-wrap:nowrap;
     gap:var(--s2);
     padding:var(--s2) var(--s4);
   }
-  .logo {
-    width:42px;
-    height:42px;
-  }
-  .marca {
-    gap:var(--s2);
-  }
   .marca {
     flex:0 1 auto;
     min-width:0;
-  }
-  .marca-texto {
-    font-size:.92rem;
   }
   .boton-menu {
     display:inline-flex;
@@ -1025,8 +984,29 @@ main > section:not([hidden]) {
     gap:var(--s1);
     margin-left:0;
   }
-  .acciones-encabezado > .boton {
-    display:none;
+  .productos,.categorias-visuales {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+  .carrito-distribucion,.nosotros-contenido {
+    grid-template-columns:1fr;
+  }
+  .resumen-carrito {
+    position:static;
+  }
+}
+@media (max-width:600px) {
+  html {
+    scroll-padding-top:76px;
+  }
+  .logo {
+    width:42px;
+    height:42px;
+  }
+  .marca {
+    gap:var(--s2);
+  }
+  .marca-texto {
+    font-size:.92rem;
   }
   .portada {
     grid-template-columns:1fr;
@@ -1121,9 +1101,6 @@ main > section:not([hidden]) {
   }
   .marca-texto {
     font-size:.85rem;
-  }
-  .acciones-encabezado > .boton {
-    font-size:.7rem;
   }
   .portada h1 {
     font-size:2.55rem;

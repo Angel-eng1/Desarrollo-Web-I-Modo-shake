@@ -844,9 +844,14 @@ function agregarDato(texto, icono, href = "") {
   enlacesPie.append(elemento.cloneNode(true));
   document.querySelector("#contacto-pie").hidden = false;
 }
-if (CONFIG_NEGOCIO.direccion.trim()) agregarDato(CONFIG_NEGOCIO.direccion.trim(), "bi-pin-map");
-if (CONFIG_NEGOCIO.horario.trim()) agregarDato(CONFIG_NEGOCIO.horario.trim(), "bi-clock");
+const direccionNegocio = CONFIG_NEGOCIO.direccion.trim();
 const numeroNegocio = CONFIG_NEGOCIO.whatsapp.replace(/\D/g, "");
+if (direccionNegocio) {
+  agregarDato(direccionNegocio, "bi-pin-map");
+} else if (numeroNegocio) {
+  agregarDato("¿Quieres saber cómo llegar? Escríbenos por WhatsApp.", "bi-pin-map", `https://wa.me/${numeroNegocio}`);
+}
+if (CONFIG_NEGOCIO.horario.trim()) agregarDato(CONFIG_NEGOCIO.horario.trim(), "bi-clock");
 if (numeroNegocio) {
   agregarDato("WhatsApp: +57 321 879 4687", "bi-whatsapp", `https://wa.me/${numeroNegocio}`);
   const enlaceFlotante = document.querySelector("#whatsapp-flotante");
