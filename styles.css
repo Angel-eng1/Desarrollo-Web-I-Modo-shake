@@ -546,3 +546,16 @@ textarea:focus-visible {
     animation-iteration-count: 1 !important;
   }
 }
+
+/* Estados de la carga asíncrona del catálogo */
+[hidden] {
+  display: none !important;
+}
+
+.catalogo #estado-catalogo.mensaje-error {
+  color: #a32620;
+}
+
+#reintentar-catalogo {
+  margin-bottom: 20px;
+}

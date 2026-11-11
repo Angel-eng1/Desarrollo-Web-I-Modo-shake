@@ -12,9 +12,15 @@ Prototipo frontend estático para la propuesta de aplicación web de Modo Shake 
 
 ## Abrir el prototipo
 
-Abre `index.html` en un navegador. Se recomienda conexión a Internet para cargar la tipografía y los iconos desde sus CDN.
+Abre la carpeta del proyecto en Visual Studio Code y ejecuta `index.html` con Live Server. La carga de `data.json` requiere un servidor HTTP local; no abras el HTML directamente con doble clic. Se recomienda conexión a Internet para cargar la tipografía y los iconos desde sus CDN.
 
 ## Alcance académico
 
 En este primer avance no se incluye JavaScript, persistencia, carrito funcional ni backend. El formulario es una maqueta y no transmite información. Según la guía, el segundo avance incorpora interacción con JavaScript y almacenamiento local; la entrega final migra a Vue.js. La propuesta original menciona React, pero el camino previsto para ajustarse a la guía de evaluación es Vue.js.
 
+
+## Avance 2 en desarrollo: catálogo dinámico
+
+Los productos se almacenan en `data.json` y se cargan desde `catalogo.js` con Fetch y async/await. JavaScript genera las tarjetas y muestra mensajes de carga, catálogo vacío o error, con una opción para reintentar. Se comprueban los estados HTTP y el formato de los datos.
+
+En este bloque todavía están pendientes los filtros, el carrito y la persistencia y validación dinámica del formulario.

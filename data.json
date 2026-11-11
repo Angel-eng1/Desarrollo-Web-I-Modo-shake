@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "nombre": "Batido de fresa",
+    "descripcion": "Explora los sabores de batidos disponibles en Modo Shake.",
+    "precio": 15000,
+    "categoria": "Batidos",
+    "imagen": "images/batido de fresa.jpg",
+    "alt": "Batido de fresa de Modo Shake",
+    "precioDesde": false
+  },
+  {
+    "id": 2,
+    "nombre": "Waffle de frutos rojos",
+    "descripcion": "Una opción dulce para disfrutar en cualquier momento.",
+    "precio": 14000,
+    "categoria": "Waffles",
+    "imagen": "images/waffles.jpg",
+    "alt": "Waffle de frutos rojos",
+    "precioDesde": false
+  },
+  {
+    "id": 3,
+    "nombre": "Pancakes de avena y banano",
+    "descripcion": "Pancakes para disfrutar en el desayuno o como una pausa rica.",
+    "precio": 15000,
+    "categoria": "Pancakes",
+    "imagen": "images/pancake.jpg",
+    "alt": "Pancakes de avena y banano",
+    "precioDesde": false
+  },
+  {
+    "id": 4,
+    "nombre": "Bowl de frutas y granola",
+    "descripcion": "Una combinación fresca de frutas y granola.",
+    "precio": 16000,
+    "categoria": "Bowls",
+    "imagen": "images/bowl.jpg",
+    "alt": "Bowl de frutas y granola",
+    "precioDesde": false
+  },
+  {
+    "id": 5,
+    "nombre": "Sándwich",
+    "descripcion": "Consulta las opciones saladas disponibles en el restaurante.",
+    "precio": 16000,
+    "categoria": "Sándwiches",
+    "imagen": "images/sandwich.jpg",
+    "alt": "Sándwich de Modo Shake",
+    "precioDesde": false
+  },
+  {
+    "id": 6,
+    "nombre": "Suplementos",
+    "descripcion": "Consulta las opciones de suplementos disponibles.",
+    "precio": 10000,
+    "categoria": "Suplementos",
+    "imagen": "images/suplementos.jpg",
+    "alt": "Suplementos disponibles en Modo Shake",
+    "precioDesde": true
+  },
+  {
+    "id": 7,
+    "nombre": "Sodas",
+    "descripcion": "Consulta los sabores y presentaciones disponibles.",
+    "precio": 14000,
+    "categoria": "Sodas",
+    "imagen": "images/sodas.jpg",
+    "alt": "Sodas disponibles en Modo Shake",
+    "precioDesde": false
+  }
+]
