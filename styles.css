@@ -1036,6 +1036,9 @@ main > section:not([hidden]) {
     width:calc(100% - 32px);
     padding-block:var(--s7);
   }
+  .boton-categorias-encabezado {
+    display:none;
+  }
   .productos {
     grid-template-columns:1fr;
   }
