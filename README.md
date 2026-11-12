@@ -1,75 +1,60 @@
 # Modo Shake — Desarrollo Web I
 
-Aplicación frontend académica para presentar los productos de Modo Shake, en Sahagún, Córdoba. El proyecto reúne el trabajo del primer avance (estructura HTML y diseño adaptable) y del segundo avance (interactividad con JavaScript nativo).
+Aplicación web académica para presentar el catálogo de Modo Shake, en Sahagún, Córdoba. Reúne la estructura y el diseño adaptable del primer avance con la interactividad del segundo avance, desarrollada con HTML, CSS y JavaScript nativo.
 
-## Funciones del avance 2
+## Funcionalidades
 
-- Catálogo de siete productos leído desde `data.json` con Fetch y `async/await`. Muestra estados de carga, error y reintento.
-- Búsqueda por nombre y filtros por categoría que actualizan las tarjetas sin recargar la página.
-- Vistas de Inicio, Categorías, Productos, Carrito, Perfil, Nosotros y Contacto, con enlaces que permiten usar Atrás y Adelante.
-- Carrito para agregar y quitar productos, cambiar cantidades y calcular el total. La selección se conserva en `localStorage` tras recargar.
-- Formulario con validación inmediata, mensajes junto a cada campo y comprobación de la fecha. El borrador y las consultas válidas se guardan en `localStorage`, donde se pueden revisar o eliminar.
+- Catálogo de siete productos cargado desde `data.json` mediante Fetch y `async/await`, con indicador de carga, mensaje de error y reintento.
+- Búsqueda por nombre y filtros por categoría sin recargar la página.
+- Navegación entre Inicio, Categorías, Productos, Carrito, Perfil, Nosotros y Contacto, compatible con Atrás y Adelante.
+- Carrito con selección de productos, cambio de cantidades y cálculo del total. Cada perfil local conserva su carrito en `localStorage`.
+- Perfiles de demostración con nombre y correo. Se requiere un perfil activo para agregar productos al carrito.
+- Formulario de contacto con validación inmediata. El borrador y las consultas válidas se conservan en `localStorage`.
+- Enlaces a Instagram, TikTok y WhatsApp, incluido un botón flotante para abrir una conversación.
 
-El total de los suplementos es estimado porque su precio depende de la cantidad. El carrito no procesa pagos ni pedidos. Las consultas se guardan solo en el navegador utilizado; no se envían al restaurante ni a un servidor.
+Los suplementos tienen un precio estimado porque su valor depende de la cantidad. El carrito no procesa pagos. Las consultas no se envían al restaurante ni a un servidor: se guardan solo en el navegador utilizado. Los perfiles no tienen contraseñas ni verificación de identidad y no funcionan entre dispositivos.
 
-## Cómo abrir el proyecto
+## Ejecución local
 
-1. Abre esta carpeta en Visual Studio Code.
-2. Abre `index.html` con **Live Server**.
-3. En la página que se abre, entra a **Categorías** o **Productos** para consultar los datos.
+El proyecto puede abrirse en Visual Studio Code y ejecutarse con **Live Server** desde `index.html`. También puede utilizarse cualquier servidor HTTP local que entregue los archivos de esta carpeta. Fetch necesita ese servidor para leer `data.json`; abrir el HTML directamente como archivo local puede impedir la carga del catálogo.
 
-Se necesita un servidor HTTP local para que Fetch pueda leer `data.json`; abrir el archivo HTML directamente con doble clic puede impedir la carga. Las tipografías de Google Fonts y los iconos de Bootstrap Icons necesitan conexión a Internet porque se enlazan desde sus CDN.
+Google Fonts y Bootstrap Icons se enlazan desde sus CDN y requieren conexión a Internet.
 
-## Organización de archivos
+## Estructura del proyecto
 
-- `index.html`: estructura semántica, navegación, tarjetas generadas y formulario.
-- `styles.css`: colores, distribución con Grid y Flexbox, vistas adaptables y animaciones.
-- `app.js`: lógica de catálogo, filtros, carrito, navegación y formulario, dividida en bloques comentados.
-- `data.json`: información de los siete productos.
-- `images/`: fotografías del logo y los productos.
+- `index.html`: estructura semántica, vistas y formulario.
+- `styles.css`: identidad visual, distribución con Grid y Flexbox, diseño adaptable y animaciones.
+- `app.js`: configuración del negocio y lógica de navegación, catálogo, filtros, carrito, perfiles y formulario.
+- `data.json`: datos de los siete productos del catálogo.
+- `images/`: logo y fotografías de productos.
 
-## Cómo comprobar las funciones
+## Comprobación de funciones
 
-- Filtra una categoría y escribe un nombre en el buscador; usa **Limpiar filtros** para volver a todos los productos.
-- Agrega productos al carrito, cambia una cantidad y recarga la página. La selección y el total deben conservarse.
-- En Contacto, intenta guardar campos vacíos o incorrectos para ver los mensajes. Escribe un borrador y recarga para comprobar que vuelve a aparecer. Completa una consulta válida, recarga y elimínala desde la lista.
+Con el proyecto abierto mediante un servidor HTTP local, estos recorridos permiten comprobar sus funciones:
 
-## Desarrollo académico
+1. Seleccionar una categoría, buscar un producto por nombre y utilizar **Limpiar filtros** para mostrar de nuevo el catálogo completo.
+2. Crear un perfil local, agregar productos al carrito, modificar una cantidad y recargar la página para comprobar la recuperación del carrito y su total.
+3. Introducir valores incorrectos en el formulario para observar los mensajes de validación. Guardar un borrador, recargar, registrar una consulta válida y eliminarla desde la lista de consultas locales.
+4. Abrir los enlaces de redes sociales y el botón flotante de WhatsApp.
 
-El primer avance cubrió HTML5 semántico, formulario con atributos nativos, diseño adaptable y recursos externos. Este segundo avance incorpora manipulación del DOM, eventos, carga asíncrona de datos, manejo de errores, validaciones dinámicas y persistencia local. La entrega final de la guía prevé migrar la aplicación a Vue.js y publicarla.
+## Interfaz y accesibilidad
 
-## Perfiles locales de demostración
+El sitio usa HTML5 semántico y un diseño adaptable para móvil, tablet y escritorio. El encabezado permanece visible durante el desplazamiento y contiene el acceso **Ver categorías**, el carrito y el perfil. La portada ofrece otro acceso a las categorías. Hasta 900 px, la navegación se presenta en un menú que puede cerrarse con Escape o al seleccionar un enlace. En pantallas de 600 px o menos se oculta el botón del encabezado para conservar una sola fila.
 
-El icono de perfil del encabezado permite crear un perfil con nombre y correo o volver a entrar con un correo previamente registrado en este mismo navegador. Antes de agregar un producto se solicita un perfil; cada perfil conserva su propio carrito local. Cerrar sesión oculta el carrito del perfil activo; al volver a entrar se recupera. También puedes eliminar el perfil local y su carrito desde la vista Perfil.
+Las tarjetas de productos y categorías mantienen proporciones de imagen uniformes. El formulario muestra ayudas junto a los campos; el pie reserva espacio para que el botón flotante de WhatsApp no cubra su contenido. Las imágenes usan nombres en minúsculas con guiones, como `images/logo-modoshake.jpg` y `images/batido-fresa.jpg`. El proyecto incluye favicon y metadatos para compartir enlaces.
 
-Esta función demuestra el flujo de registro e ingreso en el cliente. No usa contraseñas ni verifica identidades, por lo que no representa una cuenta segura ni funciona entre dispositivos. Los perfiles y carritos quedan guardados únicamente en localStorage.
+## Datos del negocio
 
-## Mejoras de interfaz
+La constante `CONFIG_NEGOCIO`, al comienzo de `app.js`, reúne la información mostrada en Contacto y en el pie:
 
-- El encabezado permanece visible al desplazarse, marca la vista activa y ofrece un menú accesible hasta 900 px. El menú se cierra con Escape o al elegir un enlace.
-- La portada presenta una fotografía, beneficios breves y el enlace principal «Ver categorías». Las tarjetas mantienen una proporción uniforme y la búsqueda ofrece filtros desplazables, estado vacío y carga visual.
-- El carrito muestra un resumen y un aviso acorde con la configuración de WhatsApp.
-- Nosotros y Contacto presentan la información en bloques legibles; el formulario muestra ayudas y permite revisar las consultas locales en un panel plegable.
-- Las imágenes usan nombres en minúsculas con guiones (por ejemplo, `images/logo-modoshake.jpg` y `images/batido-fresa.jpg`). El sitio incluye favicon y etiquetas para compartir.
+- WhatsApp: **+57 321 879 4687**. El botón flotante abre el chat y el carrito puede preparar un mensaje con el resumen del pedido.
+- Instagram: [@modoshake](https://www.instagram.com/modoshake/).
+- TikTok: [@modoshake](https://www.tiktok.com/@modoshake).
+- Horario: lunes a viernes, de 8:00 a. m. a 10:30 a. m. y de 3:00 p. m. a 9:00 p. m.; sábados y domingos, de 4:00 p. m. a 8:30 p. m.; festivos sin servicio.
+- Dirección: pendiente de confirmación. Mientras este campo permanezca vacío, el sitio muestra Sahagún, Córdoba y ofrece WhatsApp para consultar cómo llegar, sin presentar un mapa ni una dirección.
 
-## Datos del negocio por completar
+El botón de WhatsApp abre una conversación; las respuestas automáticas requieren un servicio de bot configurado por separado. El frontend no contiene claves de API. Las etiquetas `og:image` y `twitter:image` usan la URL `https://modoshake.netlify.app/images/logo-modoshake.jpg`, cuya imagen debe estar disponible en esa dirección para aparecer al compartir el sitio.
 
-Al comienzo de `app.js` está `CONFIG_NEGOCIO`. Ya incluye el WhatsApp, Instagram, TikTok y los horarios proporcionados para este proyecto:
+## Contexto académico
 
-- `whatsapp`: `573218794687`. El botón flotante abre una conversación directa y el carrito permite preparar una consulta con su resumen. Ninguno procesa pagos.
-- `instagram`: `modoshake` ([perfil](https://www.instagram.com/modoshake/)).
-- `tiktok`: `modoshake` ([perfil](https://www.tiktok.com/@modoshake)).
-- `horario`: lunes a viernes, 8:00 a. m. a 10:30 a. m. y 3:00 p. m. a 9:00 p. m.; sábados y domingos, 4:00 p. m. a 8:30 p. m.; festivos sin servicio.
-- `direccion`: pendiente de confirmación; se mostrará en Contacto y el pie cuando se complete.
-
-La ciudad Sahagún, Córdoba se muestra aunque la dirección esté vacía. En ese caso, Contacto y el pie ofrecen un enlace de WhatsApp para preguntar cómo llegar, sin mostrar mapa ni dirección. El botón de WhatsApp solo abre el chat; para respuestas automáticas se necesitará configurar aparte un servicio de bot con la plataforma de WhatsApp y su servidor. No se colocan claves de API en este frontend.
-
-Las etiquetas `og:image` y `twitter:image` apuntan a `https://modoshake.netlify.app/images/logo-modoshake.jpg`; la imagen debe estar publicada allí para que se vea al compartir el sitio. Los precios y la disponibilidad deben validarse con el negocio antes de publicar.
-
-
-## Ajustes de presentación
-
-- Las fotos de productos y categorías mantienen las proporciones 4:3 y 16:10 en los tamaños revisados. La portada conserva su tratamiento visual.
-- Hasta 900 px, el encabezado queda en una fila y el menú se despliega debajo. El enlace principal a Categorías está en la portada; el pie ofrece otro acceso.
-- Los enlaces a secciones tienen espacio respecto al encabezado fijo. El pie deja espacio para el botón flotante de WhatsApp.
-- Instagram y TikTok muestran su nombre junto al icono. Los metadatos para compartir usan la URL pública indicada arriba.
+El primer avance comprendió HTML5 semántico, validación nativa del formulario y diseño adaptable. El segundo avance incorpora manipulación del DOM, gestión de eventos, carga asíncrona de datos, manejo de errores, validaciones dinámicas y persistencia local. La guía del curso prevé una migración a Vue.js en la entrega final.
