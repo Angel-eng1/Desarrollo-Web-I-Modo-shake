@@ -16,9 +16,10 @@ Vite muestra la dirección local en la terminal. Para comprobar la compilación 
 ```bash
 npm run build
 npm run preview
+npm test
 ```
 
-El build se genera en `dist/`. Las tipografías de Google Fonts y Bootstrap Icons se enlazan desde CDN y requieren conexión a Internet.
+El build se genera en `dist/`. `npm test` ejecuta pruebas de persistencia y separación de datos entre perfiles con el ejecutor incluido en Node.js. Las tipografías de Google Fonts y Bootstrap Icons se enlazan desde CDN y requieren conexión a Internet.
 
 ## Funciones
 
@@ -43,6 +44,7 @@ Los perfiles no verifican identidades ni tienen contraseñas. El carrito no proc
 - `public/data.json` y `public/images/`: catálogo e imágenes.
 - `legacy/`: código del Avance 2 conservado como referencia de migración.
 - `netlify.toml` y `public/_redirects`: build y redirección de rutas para Netlify.
+- `tests/`: pruebas de los flujos locales de perfiles, carrito y consultas.
 
 ## Comprobación local
 
