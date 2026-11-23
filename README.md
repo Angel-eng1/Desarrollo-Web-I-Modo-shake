@@ -59,4 +59,4 @@ Los perfiles no verifican identidades ni tienen contraseñas. El carrito no proc
 
 El WhatsApp configurado es **+57 321 879 4687**; Instagram y TikTok usan **@modoshake**. Los horarios están en `src/config/negocio.js`. La dirección permanece vacía hasta que el negocio la confirme; el sitio ofrece WhatsApp para preguntar cómo llegar y no muestra un mapa.
 
-URL de producción: [modoshake.netlify.app](https://modoshake.netlify.app). Netlify debe construir con `npm run build` y publicar `dist`. La URL puede mostrar la versión anterior hasta que se despliegue esta rama Vue.
+URL de producción: [modoshake.netlify.app](https://modoshake.netlify.app). Netlify debe usar Node.js 24, construir con `npm run build` y publicar `dist`; estos valores están en `netlify.toml`. La URL puede mostrar la versión anterior hasta que se despliegue esta rama Vue.
