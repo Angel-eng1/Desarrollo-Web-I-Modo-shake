@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted } from 'vue'
+import { computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useCatalogoStore } from '../stores/catalogo'
 import { useCarritoStore } from '../stores/carrito'
@@ -21,6 +21,9 @@ function agregar() {
 const catalogo = useCatalogoStore()
 onMounted(() => catalogo.cargar())
 const producto = computed(() => catalogo.obtenerPorId(route.params.id))
+watch([producto, () => catalogo.estado], ([actual, estado]) => {
+  if (estado === 'listo') document.title = `${actual ? actual.nombre : 'Producto no encontrado'} | Modo Shake`
+}, { immediate: true })
 const precio = computed(() => producto.value ? new Intl.NumberFormat('es-CO', {
   style: 'currency', currency: 'COP', maximumFractionDigits: 0,
 }).format(producto.value.precio) : '')

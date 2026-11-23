@@ -17,7 +17,7 @@ onMounted(enfocarTitulo)
 <template>
   <a class="salto-contenido" href="#contenido">Saltar al contenido</a>
   <EncabezadoSitio />
-  <main id="contenido">
+  <main id="contenido" tabindex="-1">
     <RouterView v-slot="{ Component }">
       <Transition name="vista" mode="out-in" @after-enter="enfocarTitulo">
         <component :is="Component" :key="route.fullPath" />

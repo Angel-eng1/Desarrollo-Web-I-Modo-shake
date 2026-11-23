@@ -23,7 +23,7 @@ const precio = computed(() => new Intl.NumberFormat('es-CO', {
       <p>{{ producto.descripcion }}</p>
       <strong>{{ producto.precioDesde ? 'Desde ' : '' }}{{ precio }}</strong>
       <button class="boton" type="button" @click="emit('agregar', producto.id)">Agregar al carrito</button>
-      <RouterLink class="enlace-detalle" :to="{ name: 'producto-detalle', params: { id: producto.id } }">Ver detalle <i class="bi bi-arrow-right" aria-hidden="true"></i></RouterLink>
+      <RouterLink class="enlace-detalle" :to="{ name: 'producto-detalle', params: { id: producto.id } }" :aria-label="`Ver detalle de ${producto.nombre}`">Ver detalle <i class="bi bi-arrow-right" aria-hidden="true"></i></RouterLink>
     </div>
   </article>
 </template>
