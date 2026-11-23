@@ -19,7 +19,7 @@ npm run preview
 npm test
 ```
 
-El build se genera en `dist/`. `npm test` ejecuta pruebas de persistencia y separación de datos entre perfiles con el ejecutor incluido en Node.js. Las tipografías de Google Fonts y Bootstrap Icons se enlazan desde CDN y requieren conexión a Internet.
+El build se genera en `dist/`. `npm test` ejecuta pruebas del catálogo (200, 404, 500 y reintento), así como de persistencia y separación de datos entre perfiles, con el ejecutor incluido en Node.js. Las tipografías de Google Fonts y Bootstrap Icons se enlazan desde CDN y requieren conexión a Internet.
 
 ## Funciones
 

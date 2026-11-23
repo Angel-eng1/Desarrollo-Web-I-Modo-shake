@@ -73,3 +73,30 @@ test('el borrador y las consultas sobreviven al reinicio y se pueden eliminar', 
   assert.equal(consultas.eliminar(consultas.consultas[0].id), true)
   assert.equal(consultas.consultas.length, 0)
 })
+
+test('el catálogo distingue errores HTTP, datos inválidos y reintenta la carga', async (t) => {
+  prepararNavegador()
+  const catalogo = useCatalogoStore()
+  let respuesta = new Response('', { status: 404 })
+  const peticion = t.mock.method(globalThis, 'fetch', async () => respuesta)
+
+  await catalogo.cargar()
+  assert.equal(catalogo.estado, 'error')
+  assert.match(catalogo.error, /404/)
+  respuesta = new Response('', { status: 500 })
+  await catalogo.cargar(true)
+  assert.equal(catalogo.estado, 'error')
+  assert.match(catalogo.error, /servidor/)
+
+  respuesta = new Response(JSON.stringify([{ id: 1 }]), { status: 200 })
+  await catalogo.cargar(true)
+  assert.equal(catalogo.estado, 'error')
+  assert.match(catalogo.error, /formato esperado/)
+
+  respuesta = new Response(JSON.stringify(productos), { status: 200 })
+  await catalogo.cargar(true)
+  assert.equal(catalogo.estado, 'listo')
+  assert.equal(catalogo.productos.length, 7)
+  assert.equal(catalogo.obtenerPorId(1)?.nombre, 'Batido de fresa')
+  assert.equal(peticion.mock.callCount(), 4)
+})

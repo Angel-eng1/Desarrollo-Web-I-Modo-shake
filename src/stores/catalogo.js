@@ -17,7 +17,7 @@ export const useCatalogoStore = defineStore('catalogo', {
       this.estado = 'cargando'
       this.error = ''
       try {
-        const respuesta = await fetch(`${import.meta.env.BASE_URL}data.json`)
+        const respuesta = await fetch(`${import.meta.env?.BASE_URL ?? '/'}data.json`)
         if (!respuesta.ok) {
           if (respuesta.status === 404) throw new Error('No se encontró el catálogo (404).')
           if (respuesta.status >= 500) throw new Error('El servidor no pudo cargar el catálogo. Intenta más tarde.')
