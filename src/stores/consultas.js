@@ -22,7 +22,8 @@ export const useConsultasStore = defineStore('consultas', () => {
   const borrador = reactive({
     ...vacio(),
     ...Object.fromEntries(Object.entries(guardado && typeof guardado === 'object' && !Array.isArray(guardado) ? guardado : {})
-      .filter(([clave, valor]) => clave in vacio() && typeof valor === 'string')),
+      .filter(([clave, valor]) => clave in vacio() && (typeof valor === 'string' || (clave === 'personas' && typeof valor === 'number')))
+      .map(([clave, valor]) => [clave, String(valor)])),
   })
   const datos = leer(CLAVE_CONSULTAS, [])
   const consultas = ref(Array.isArray(datos)
@@ -41,12 +42,14 @@ export const useConsultasStore = defineStore('consultas', () => {
   }
 
   function guardarBorrador() {
-    guardar(CLAVE_BORRADOR, { ...borrador })
+    guardar(CLAVE_BORRADOR, Object.fromEntries(
+      Object.entries(borrador).map(([clave, valor]) => [clave, String(valor)])
+    ))
   }
 
   function guardarConsulta() {
     const consulta = { id: crypto.randomUUID(), ...Object.fromEntries(
-      Object.entries(borrador).map(([clave, valor]) => [clave, valor.trim()])
+      Object.entries(borrador).map(([clave, valor]) => [clave, String(valor).trim()])
     ) }
     const nuevas = [consulta, ...consultas.value]
     if (!guardar(CLAVE_CONSULTAS, nuevas)) return false

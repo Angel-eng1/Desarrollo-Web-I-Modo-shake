@@ -10,5 +10,10 @@
       <img src="/images/waffles.jpg" width="960" height="960" alt="Waffle de frutos rojos de Modo Shake">
       <figcaption>Tu pausa favorita, en Modo Shake.</figcaption>
     </figure>
+    <div class="beneficios" aria-label="Lo que nos inspira">
+      <p><i class="bi bi-leaf" aria-hidden="true"></i> Ingredientes frescos</p>
+      <p><i class="bi bi-heart" aria-hidden="true"></i> Preparado con cuidado</p>
+      <p><i class="bi bi-stars" aria-hidden="true"></i> Opciones para tu ritmo</p>
+    </div>
   </section>
 </template>

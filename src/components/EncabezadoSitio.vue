@@ -56,7 +56,7 @@ onUnmounted(() => window.removeEventListener('keydown', alPulsarTecla))
       <RouterLink class="boton boton-categorias-encabezado" to="/categorias">
         Ver categorías <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
       </RouterLink>
-      <RouterLink class="enlace-icono" to="/carrito" :aria-label="`Carrito, ${carrito.unidades} productos`" title="Ver carrito">
+      <RouterLink class="enlace-icono" to="/carrito" :aria-label="`Carrito, ${carrito.unidades} ${carrito.unidades === 1 ? 'producto' : 'productos'}`" title="Ver carrito">
         <i class="bi bi-cart3" aria-hidden="true"></i><span class="insignia" aria-hidden="true">{{ carrito.unidades }}</span>
       </RouterLink>
       <RouterLink class="enlace-icono" to="/perfil" :aria-label="perfil.actual ? `Perfil de ${perfil.actual.nombre}` : 'Perfil, entrar o registrarse'" title="Perfil">

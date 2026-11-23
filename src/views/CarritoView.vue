@@ -11,7 +11,8 @@ const carrito = useCarritoStore()
 const perfil = usePerfilStore()
 onMounted(() => catalogo.cargar())
 
-function actualizarCantidad(item, event) {
+function actualizarCantidad(item, event, confirmar = false) {
+  if (!event.target.value && !confirmar) return
   if (!carrito.cambiarCantidad(item.id, event.target.value)) event.target.value = item.cantidad
 }
 
@@ -47,7 +48,7 @@ const whatsappUrl = computed(() => {
                 <p>{{ item.producto.precioDesde ? 'Desde ' : '' }}{{ moneda(item.producto.precio) }} COP / unidad</p>
               </div>
               <label :for="`cantidad-${item.id}`">Cantidad</label>
-              <input :id="`cantidad-${item.id}`" type="number" min="1" max="99" step="1" :value="item.cantidad" @change="actualizarCantidad(item, $event)">
+              <input :id="`cantidad-${item.id}`" type="number" min="1" max="99" step="1" :value="item.cantidad" @input="actualizarCantidad(item, $event)" @change="actualizarCantidad(item, $event, true)">
               <strong>{{ moneda(item.producto.precio * item.cantidad) }} COP</strong>
               <button type="button" :aria-label="`Eliminar ${item.producto.nombre} del carrito`" @click="carrito.quitar(item.id)">Eliminar</button>
             </li>

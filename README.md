@@ -1,29 +1,60 @@
-# Modo Shake — entrega final
+# Modo Shake — Desarrollo Web I
 
-Aplicación web académica de Modo Shake (Sahagún, Córdoba). Esta rama contiene la base Vue 3 con Vite, Vue Router y Pinia para migrar por fases la aplicación del Avance 2. La migración de las vistas y funciones aún está en curso; la versión anterior se conserva en `legacy/` y en el historial de `main`.
+Aplicación web académica para presentar los productos de Modo Shake en Sahagún, Córdoba. La entrega final es una SPA desarrollada con Vue 3, Vite, Vue Router y Pinia.
 
-## Requisitos y ejecución local
+## Ejecutar el proyecto
 
-- Node.js compatible con el campo `engines` de `package.json` y npm.
-- `npm install`: instala las dependencias.
-- `npm run dev`: inicia el servidor local de Vite.
-- `npm run build`: genera la versión de producción en `dist/`.
-- `npm run preview`: permite revisar localmente el resultado del build.
+Requiere Node.js compatible con el campo `engines` de `package.json` y npm.
 
-## Estructura actual
+```bash
+npm install
+npm run dev
+```
 
-- `src/`: punto de entrada Vue, componente raíz, router y configuración pública del negocio.
-- `public/data.json`: catálogo de siete productos, disponible como archivo público para Fetch.
-- `public/images/`: logo y fotografías.
-- `legacy/`: código HTML, CSS y JavaScript del Avance 2, conservado como referencia de migración.
-- `netlify.toml` y `public/_redirects`: configuración de build y rutas SPA para Netlify.
+Vite muestra la dirección local en la terminal. Para comprobar la compilación de producción:
 
-## Alcance de la migración
+```bash
+npm run build
+npm run preview
+```
 
-La navegación y las vistas base ya usan Vue Router, con carga diferida, título por ruta, página 404 y transición adaptable a movimiento reducido. El catálogo y los filtros ya usan un store de Pinia; Categorías, Productos y el detalle por ID muestran datos de `public/data.json`, con estados de carga, error y reintento. Los perfiles locales y el carrito ya usan stores de Pinia y conservan los datos por perfil en `localStorage`. El formulario de contacto también usa Vue y un store de Pinia: valida los campos al editarlos y conserva el borrador y las consultas en `localStorage`. El estado compartido se divide en los stores de catálogo, carrito, perfil y consultas. Los perfiles son demostrativos y los datos guardados en el navegador no constituyen autenticación ni envío a un servidor.
+El build se genera en `dist/`. Las tipografías de Google Fonts y Bootstrap Icons se enlazan desde CDN y requieren conexión a Internet.
 
-La configuración pública del negocio está en `src/config/negocio.js`. La dirección permanece vacía hasta su confirmación. El enlace a WhatsApp abre una conversación; el bot se desarrollará aparte.
+## Funciones
 
-## Producción
+- Navegación SPA con vistas de Inicio, Categorías, Productos, detalle, Carrito, Perfil, Nosotros y Contacto, además de una ruta 404. Las vistas se cargan al visitarlas.
+- Catálogo de siete productos obtenido con Fetch desde `public/data.json`, con indicador de carga, manejo de errores y reintento.
+- Filtros por categoría y búsqueda por nombre. El detalle consulta el producto por ID y muestra un mensaje si no existe.
+- Perfiles locales de demostración. Cada perfil conserva su propio carrito en `localStorage`; para agregar un producto se requiere un perfil activo.
+- Carrito con cantidades, total, eliminación y enlace para consultar la selección por WhatsApp. Los suplementos se muestran con precio estimado.
+- Formulario de contacto con validación inmediata, borrador recuperable y consultas que se pueden revisar o eliminar. Los datos se guardan solo en el navegador.
+- Menú adaptable, navegación con teclado, mensajes accesibles, transiciones que respetan la preferencia de movimiento reducido y botón flotante de WhatsApp.
 
-URL de producción: https://modoshake.netlify.app. Durante esta fase, la URL puede seguir mostrando la versión anterior hasta que se revise y publique la aplicación Vue.
+Los perfiles no verifican identidades ni tienen contraseñas. El carrito no procesa pagos y el formulario no envía consultas al restaurante ni a un servidor. El botón de WhatsApp abre el chat; un bot necesitaría un servicio configurado aparte.
+
+## Estructura
+
+- `src/views/`: páginas asociadas a las rutas.
+- `src/components/`: encabezado, pie, tarjetas, filtros y elementos compartidos.
+- `src/stores/`: estado de catálogo, carrito, perfil y consultas mediante Pinia.
+- `src/router/`: rutas de Vue Router, carga diferida y títulos.
+- `src/config/negocio.js`: WhatsApp, redes, horarios y dirección del negocio.
+- `src/assets/main.css`: estilos adaptables.
+- `public/data.json` y `public/images/`: catálogo e imágenes.
+- `legacy/`: código del Avance 2 conservado como referencia de migración.
+- `netlify.toml` y `public/_redirects`: build y redirección de rutas para Netlify.
+
+## Comprobación local
+
+1. Abrir Categorías, elegir una categoría y comprobar el filtro en Productos. Usar la búsqueda y **Limpiar filtros**.
+2. Abrir un detalle de producto y probar una URL con un ID inexistente.
+3. Agregar un producto sin perfil, crear un perfil local y comprobar que el producto pendiente llega al carrito.
+4. Cambiar la cantidad, recargar, cerrar sesión y volver a entrar para comprobar la recuperación del carrito de ese perfil.
+5. En Contacto, intentar guardar campos vacíos, completar un borrador y recargar. Después guardar y eliminar una consulta local.
+6. Revisar el menú móvil, las rutas al recargar y el diseño a 360, 768 y 1280 px.
+
+## Datos del negocio y publicación
+
+El WhatsApp configurado es **+57 321 879 4687**; Instagram y TikTok usan **@modoshake**. Los horarios están en `src/config/negocio.js`. La dirección permanece vacía hasta que el negocio la confirme; el sitio ofrece WhatsApp para preguntar cómo llegar y no muestra un mapa.
+
+URL de producción: [modoshake.netlify.app](https://modoshake.netlify.app). Netlify debe construir con `npm run build` y publicar `dist`. La URL puede mostrar la versión anterior hasta que se despliegue esta rama Vue.
