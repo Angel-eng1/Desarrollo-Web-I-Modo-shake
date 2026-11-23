@@ -1,10 +1,23 @@
 <script setup>
 import { computed, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useCatalogoStore } from '../stores/catalogo'
+import { useCarritoStore } from '../stores/carrito'
+import { usePerfilStore } from '../stores/perfil'
 import EstadoCatalogo from '../components/EstadoCatalogo.vue'
 
 const route = useRoute()
+const router = useRouter()
+const carrito = useCarritoStore()
+const perfil = usePerfilStore()
+function agregar() {
+  if (!perfil.actual) {
+    perfil.pendienteId = producto.value.id
+    router.push('/perfil')
+    return
+  }
+  carrito.agregar(producto.value.id)
+}
 const catalogo = useCatalogoStore()
 onMounted(() => catalogo.cargar())
 const producto = computed(() => catalogo.obtenerPorId(route.params.id))
@@ -23,6 +36,8 @@ const precio = computed(() => producto.value ? new Intl.NumberFormat('es-CO', {
         <h1 tabindex="-1">{{ producto.nombre }}</h1>
         <p>{{ producto.descripcion }}</p>
         <strong>{{ producto.precioDesde ? 'Desde ' : '' }}{{ precio }}</strong>
+        <button class="boton" type="button" @click="agregar">Agregar al carrito</button>
+        <p role="status" aria-live="polite">{{ carrito.aviso }}</p>
         <p><RouterLink to="/productos">Volver a productos</RouterLink></p>
       </div>
     </article>

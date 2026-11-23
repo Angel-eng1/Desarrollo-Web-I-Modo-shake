@@ -1,9 +1,13 @@
 <script setup>
 import { onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { useCarritoStore } from '../stores/carrito'
+import { usePerfilStore } from '../stores/perfil'
 
 const abierto = ref(false)
 const route = useRoute()
+const carrito = useCarritoStore()
+const perfil = usePerfilStore()
 
 function cerrarMenu() {
   abierto.value = false
@@ -52,10 +56,10 @@ onUnmounted(() => window.removeEventListener('keydown', alPulsarTecla))
       <RouterLink class="boton boton-categorias-encabezado" to="/categorias">
         Ver categorías <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
       </RouterLink>
-      <RouterLink class="enlace-icono" to="/carrito" aria-label="Ver carrito" title="Ver carrito">
-        <i class="bi bi-cart3" aria-hidden="true"></i>
+      <RouterLink class="enlace-icono" to="/carrito" :aria-label="`Carrito, ${carrito.unidades} productos`" title="Ver carrito">
+        <i class="bi bi-cart3" aria-hidden="true"></i><span class="insignia" aria-hidden="true">{{ carrito.unidades }}</span>
       </RouterLink>
-      <RouterLink class="enlace-icono" to="/perfil" aria-label="Ir al perfil" title="Perfil">
+      <RouterLink class="enlace-icono" to="/perfil" :aria-label="perfil.actual ? `Perfil de ${perfil.actual.nombre}` : 'Perfil, entrar o registrarse'" title="Perfil">
         <i class="bi bi-person-circle" aria-hidden="true"></i>
       </RouterLink>
     </div>

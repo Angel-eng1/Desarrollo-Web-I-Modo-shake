@@ -2,6 +2,8 @@
 import { computed } from 'vue'
 
 // La tarjeta recibe un producto del catálogo por prop; no modifica el store.
+// El evento agregar comunica la acción a la vista.
+const emit = defineEmits(['agregar'])
 const props = defineProps({
   producto: { type: Object, required: true },
 })
@@ -20,6 +22,7 @@ const precio = computed(() => new Intl.NumberFormat('es-CO', {
       <h2><RouterLink :to="{ name: 'producto-detalle', params: { id: producto.id } }">{{ producto.nombre }}</RouterLink></h2>
       <p>{{ producto.descripcion }}</p>
       <strong>{{ producto.precioDesde ? 'Desde ' : '' }}{{ precio }}</strong>
+      <button class="boton" type="button" @click="emit('agregar', producto.id)">Agregar al carrito</button>
       <RouterLink class="enlace-detalle" :to="{ name: 'producto-detalle', params: { id: producto.id } }">Ver detalle <i class="bi bi-arrow-right" aria-hidden="true"></i></RouterLink>
     </div>
   </article>

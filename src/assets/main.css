@@ -105,3 +105,33 @@ main { min-height: 65vh; }
   .esqueletos { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { .esqueletos span { animation: none; } }
+
+/* Perfil y carrito */
+.enlace-icono { position: relative; }
+.insignia { position: absolute; top: -6px; right: -5px; min-width: 22px; padding: 2px 5px; border-radius: 999px; background: #587a32; color: white; font: 800 .7rem 'Nunito Sans', sans-serif; text-align: center; }
+.formularios-perfil { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin: 24px 0; }
+.formularios-perfil form, .panel-perfil, .resumen-carrito { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 24px; border: 1px solid #e5e7dd; border-radius: 20px; background: white; }
+.formularios-perfil h2 { margin: 0 0 10px; }
+.formularios-perfil label { font-weight: 800; }
+.formularios-perfil input, .item-carrito input { width: 100%; min-height: 44px; padding: 8px 12px; border: 1px solid #aab89d; border-radius: 10px; font: inherit; }
+.formularios-perfil input:focus-visible, .item-carrito input:focus-visible { outline: 3px solid #e7b437; outline-offset: 2px; }
+.acciones-perfil { display: flex; flex-wrap: wrap; gap: 12px; }
+.boton-secundario { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 20px; border: 1px solid #587a32; border-radius: 999px; background: white; color: #28411c; font: 800 1rem 'Nunito Sans', sans-serif; cursor: pointer; }
+.boton-secundario:focus-visible { outline: 3px solid #e7b437; outline-offset: 3px; }
+.carrito-distribucion { display: grid; grid-template-columns: minmax(0, 2fr) minmax(240px, 1fr); align-items: start; gap: 24px; }
+.lista-carrito { display: grid; gap: 14px; margin: 0; padding: 0; list-style: none; }
+.item-carrito { display: grid; grid-template-columns: 100px minmax(0, 1fr) 80px 80px; align-items: center; gap: 12px; padding: 16px; border: 1px solid #e5e7dd; border-radius: 18px; background: white; }
+.item-carrito img { width: 100px; height: 80px; object-fit: cover; border-radius: 12px; }
+.item-carrito label { grid-column: 3; grid-row: 1; align-self: start; }
+.item-carrito input { grid-column: 3; grid-row: 1; align-self: end; margin-top: 24px; }
+.item-carrito button { grid-column: 4; border: 0; background: transparent; color: #9a332e; font: inherit; text-decoration: underline; cursor: pointer; }
+.resumen-carrito { position: sticky; top: 88px; }
+@media (max-width: 900px) { .carrito-distribucion { grid-template-columns: 1fr; } .resumen-carrito { position: static; } }
+@media (max-width: 600px) {
+  .formularios-perfil { grid-template-columns: 1fr; }
+  .item-carrito { grid-template-columns: 75px minmax(0, 1fr); }
+  .item-carrito img { width: 75px; height: 75px; }
+  .item-carrito label { grid-column: 1; grid-row: 2; }
+  .item-carrito input { grid-column: 2; grid-row: 2; margin-top: 0; }
+  .item-carrito button { grid-column: 2; }
+}

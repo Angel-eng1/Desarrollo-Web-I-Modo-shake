@@ -1,13 +1,19 @@
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useCatalogoStore } from '../stores/catalogo'
+import { useCarritoStore } from '../stores/carrito'
+import { usePerfilStore } from '../stores/perfil'
 import EstadoCatalogo from '../components/EstadoCatalogo.vue'
 import FiltroCategoria from '../components/FiltroCategoria.vue'
 import TarjetaProducto from '../components/TarjetaProducto.vue'
 
 const catalogo = useCatalogoStore()
 const route = useRoute()
+const router = useRouter()
+const carrito = useCarritoStore()
+const perfil = usePerfilStore()
+const aviso = ref('')
 const busqueda = ref('')
 const categoria = ref(typeof route.query.categoria === 'string' ? route.query.categoria : '')
 watch(() => route.query.categoria, (valor) => { categoria.value = typeof valor === 'string' ? valor : '' })
@@ -18,6 +24,15 @@ const filtrados = computed(() => catalogo.productos.filter((producto) =>
   (!categoria.value || producto.categoria === categoria.value) &&
   normalizar(producto.nombre).includes(normalizar(busqueda.value))
 ))
+function agregar(id) {
+  if (!perfil.actual) {
+    perfil.pendienteId = id
+    router.push('/perfil')
+    return
+  }
+  carrito.agregar(id)
+  aviso.value = carrito.aviso
+}
 function limpiar() {
   busqueda.value = ''
   categoria.value = ''
@@ -40,8 +55,9 @@ function limpiar() {
     </div>
     <EstadoCatalogo :estado="catalogo.estado" :error="catalogo.error" @reintentar="catalogo.cargar(true)" />
     <p v-if="catalogo.estado === 'listo'" role="status" aria-live="polite">{{ filtrados.length }} {{ filtrados.length === 1 ? 'producto encontrado' : 'productos encontrados' }}.</p>
+    <p role="status" aria-live="polite">{{ aviso }}</p>
     <div v-if="catalogo.estado === 'listo' && filtrados.length" id="listado-productos" class="rejilla-productos">
-      <TarjetaProducto v-for="producto in filtrados" :key="producto.id" :producto="producto" />
+      <TarjetaProducto v-for="producto in filtrados" :key="producto.id" :producto="producto" @agregar="agregar" />
     </div>
     <div v-else-if="catalogo.estado === 'listo'" class="sin-resultados">
       <h2>No encontramos coincidencias</h2>

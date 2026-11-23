@@ -20,7 +20,7 @@ Aplicación web académica de Modo Shake (Sahagún, Córdoba). Esta rama contien
 
 ## Alcance de la migración
 
-La navegación y las vistas base ya usan Vue Router, con carga diferida, título por ruta, página 404 y transición adaptable a movimiento reducido. El catálogo y los filtros ya usan un store de Pinia; Categorías, Productos y el detalle por ID muestran datos de `public/data.json`, con estados de carga, error y reintento. Las siguientes fases migrarán los perfiles locales, el carrito y el formulario. El estado compartido utiliza el store de catálogo y se ampliará con stores de carrito, perfil y consultas. Los perfiles seguirán siendo demostrativos y los datos guardados en el navegador no constituyen autenticación ni envío a un servidor.
+La navegación y las vistas base ya usan Vue Router, con carga diferida, título por ruta, página 404 y transición adaptable a movimiento reducido. El catálogo y los filtros ya usan un store de Pinia; Categorías, Productos y el detalle por ID muestran datos de `public/data.json`, con estados de carga, error y reintento. Los perfiles locales y el carrito ya usan stores de Pinia y conservan los datos por perfil en `localStorage`. La siguiente fase migrará el formulario de contacto. El estado compartido utiliza el store de catálogo y se ampliará con stores de carrito, perfil y consultas. Los perfiles seguirán siendo demostrativos y los datos guardados en el navegador no constituyen autenticación ni envío a un servidor.
 
 La configuración pública del negocio está en `src/config/negocio.js`. La dirección permanece vacía hasta su confirmación. El enlace a WhatsApp abre una conversación; el bot se desarrollará aparte.
 
