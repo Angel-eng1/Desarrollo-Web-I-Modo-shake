@@ -27,7 +27,7 @@ El build se genera en `dist/`. `npm test` ejecuta pruebas del catálogo (200, 40
 - Catálogo de siete productos obtenido con Fetch desde `public/data.json`, con indicador de carga, manejo de errores y reintento.
 - Filtros por categoría y búsqueda por nombre. El detalle consulta el producto por ID, presenta su precio y foto, ofrece consulta por WhatsApp y sugiere otros productos del catálogo; muestra un mensaje si el ID no existe.
 - Perfiles locales de demostración. Cada perfil conserva su propio carrito en `localStorage`; para agregar un producto se requiere un perfil activo.
-- Acceso con Google mediante Firebase Authentication cuando se configura un proyecto Firebase. El carrito de una cuenta Google se separa del de un perfil local, incluso si usan el mismo correo.
+- Acceso y registro con Google mediante Firebase Authentication cuando se configura un proyecto Firebase. El primer acceso crea la cuenta; los siguientes recuperan la misma identidad. El carrito de una cuenta Google se separa del de un perfil local, incluso si usan el mismo correo.
 - Carrito con cantidades, total, eliminación y enlace para consultar la selección por WhatsApp. Los suplementos se muestran con precio estimado.
 - Formulario de contacto con validación inmediata, borrador recuperable y consultas que se pueden revisar o eliminar. Los datos se guardan solo en el navegador.
 - Menú adaptable, navegación con teclado, mensajes accesibles, transiciones que respetan la preferencia de movimiento reducido y botón flotante de WhatsApp.

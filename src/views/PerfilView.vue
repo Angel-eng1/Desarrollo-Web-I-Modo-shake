@@ -62,12 +62,12 @@ async function entrarGoogle() {
     <template v-else>
       <div v-if="perfil.googleDisponible || mostrarConfiguracion" class="acceso-google">
         <div>
-          <h2>Continuar con Google</h2>
-          <p>Accede con tu cuenta Google para usar tu carrito en este navegador.</p>
+          <h2>Entrar o registrarse con Google</h2>
+          <p>Si es tu primera vez, tu cuenta se crea al continuar. El carrito se guarda en este navegador.</p>
         </div>
         <button class="boton-google" type="button" :disabled="!perfil.googleDisponible || perfil.googleCargando" @click="entrarGoogle">
           <i class="bi bi-google" aria-hidden="true"></i>
-          {{ perfil.googleCargando ? 'Abriendo Google…' : 'Entrar con Google' }}
+          {{ perfil.googleCargando ? 'Abriendo Google…' : 'Continuar con Google' }}
         </button>
         <p v-if="mostrarConfiguracion && !perfil.googleDisponible" class="aviso-configuracion">Falta configurar Firebase para probar este acceso en local.</p>
       </div>

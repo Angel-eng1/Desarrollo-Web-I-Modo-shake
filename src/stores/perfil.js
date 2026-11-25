@@ -64,6 +64,8 @@ export const usePerfilStore = defineStore('perfil', () => {
         aviso.value = 'El navegador bloqueó la ventana de Google. Permite ventanas emergentes e inténtalo de nuevo.'
       } else if (error.code === 'auth/unauthorized-domain') {
         aviso.value = 'Este dominio aún no está autorizado en Firebase.'
+      } else if (error.code === 'auth/operation-not-allowed') {
+        aviso.value = 'Activa el proveedor Google en Firebase Authentication para usar este acceso.'
       } else {
         aviso.value = 'No se pudo entrar con Google. Inténtalo de nuevo.'
       }
