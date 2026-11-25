@@ -1,8 +1,39 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
-const reelActivo = ref(false)
-const urlReel = 'https://www.instagram.com/reel/DfGDmK7gEna/'
+const publicaciones = [
+  {
+    id: 'DfGDmK7gEna',
+    tipo: 'Reel',
+    titulo: 'Mini pancakes en preparación',
+    descripcion: 'Un bowl de mini pancakes preparado en Modo Shake.',
+    url: 'https://www.instagram.com/reel/DfGDmK7gEna/',
+    embed: 'https://www.instagram.com/reel/DfGDmK7gEna/embed/',
+  },
+  {
+    id: 'Dfry-5QEbaz',
+    tipo: 'Fotos',
+    titulo: 'Una sorpresa para compartir',
+    descripcion: 'Batidos y otras opciones de Modo Shake en una publicación del restaurante.',
+    url: 'https://www.instagram.com/p/Dfry-5QEbaz/',
+    embed: 'https://www.instagram.com/p/Dfry-5QEbaz/embed/',
+  },
+  {
+    id: 'DfYM4nDlKh0',
+    tipo: 'Fotos',
+    titulo: 'Momentos en Modo Shake',
+    descripcion: 'Personas y momentos compartidos en Modo Shake.',
+    url: 'https://www.instagram.com/p/DfYM4nDlKh0/',
+    embed: 'https://www.instagram.com/p/DfYM4nDlKh0/embed/',
+  },
+]
+
+const indice = ref(0)
+const publicacion = computed(() => publicaciones[indice.value])
+
+function mover(direccion) {
+  indice.value = (indice.value + direccion + publicaciones.length) % publicaciones.length
+}
 </script>
 
 <template>
@@ -24,26 +55,48 @@ const urlReel = 'https://www.instagram.com/reel/DfGDmK7gEna/'
     </div>
   </section>
 
-  <section class="reel-destacado" aria-labelledby="reel-titulo">
-    <div class="reel-texto">
-      <p class="etiqueta">DESDE NUESTRO INSTAGRAM</p>
-      <h2 id="reel-titulo">Un vistazo a Modo Shake</h2>
-      <p>Mira cómo preparan un bowl de mini pancakes en este Reel de @modoshake.</p>
-      <a :href="urlReel" target="_blank" rel="noopener noreferrer">Ver Reel en Instagram <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
-      <p class="reel-nota">El video se carga desde Instagram al pulsar reproducir.</p>
+  <section class="galeria-instagram" aria-labelledby="galeria-titulo">
+    <div class="galeria-encabezado">
+      <div>
+        <p class="etiqueta">DESDE @MODOSHAKE</p>
+        <h2 id="galeria-titulo">Momentos para compartir</h2>
+        <p>Explora un Reel y fotos publicados por Modo Shake en Instagram.</p>
+      </div>
+      <a href="https://www.instagram.com/modoshake/" target="_blank" rel="noopener noreferrer">Seguir en Instagram <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
     </div>
-    <div class="reel-marco">
-      <iframe
-        v-if="reelActivo"
-        src="https://www.instagram.com/reel/DfGDmK7gEna/embed/"
-        title="Reel de Modo Shake: preparación de un bowl de mini pancakes"
-        allow="autoplay; encrypted-media; picture-in-picture"
-        allowfullscreen
-      ></iframe>
-      <button v-else class="reel-portada" type="button" aria-label="Reproducir Reel de Modo Shake" @click="reelActivo = true">
-        <img src="/images/pancake.jpg" width="960" height="960" alt="" loading="lazy">
-        <span class="reel-reproducir"><i class="bi bi-play-fill" aria-hidden="true"></i><span>Reproducir Reel</span></span>
-      </button>
+
+    <div class="galeria-panel">
+      <div class="galeria-info">
+        <span class="galeria-tipo">{{ publicacion.tipo }}</span>
+        <h3>{{ publicacion.titulo }}</h3>
+        <p>{{ publicacion.descripcion }}</p>
+        <a :href="publicacion.url" target="_blank" rel="noopener noreferrer">Ver publicación original <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
+        <div class="galeria-controles" aria-label="Controles del carrusel">
+          <button type="button" aria-label="Publicación anterior" @click="mover(-1)"><i class="bi bi-arrow-left" aria-hidden="true"></i></button>
+          <span aria-live="polite">{{ indice + 1 }} de {{ publicaciones.length }}</span>
+          <button type="button" aria-label="Publicación siguiente" @click="mover(1)"><i class="bi bi-arrow-right" aria-hidden="true"></i></button>
+        </div>
+        <div class="galeria-indicadores" aria-label="Elegir publicación">
+          <button
+            v-for="(item, posicion) in publicaciones"
+            :key="item.id"
+            type="button"
+            :aria-label="`Mostrar ${item.tipo.toLowerCase()}: ${item.titulo}`"
+            :aria-pressed="indice === posicion"
+            @click="indice = posicion"
+          ></button>
+        </div>
+      </div>
+      <div class="galeria-marco" :class="publicacion.tipo === 'Reel' ? 'es-reel' : 'es-foto'">
+        <iframe
+          :key="publicacion.id"
+          :src="publicacion.embed"
+          :title="`${publicacion.tipo} de Modo Shake: ${publicacion.titulo}`"
+          loading="lazy"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
     </div>
   </section>
 </template>
