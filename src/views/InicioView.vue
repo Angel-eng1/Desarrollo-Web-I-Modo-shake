@@ -1,3 +1,10 @@
+<script setup>
+import { ref } from 'vue'
+
+const reelActivo = ref(false)
+const urlReel = 'https://www.instagram.com/reel/DfGDmK7gEna/'
+</script>
+
 <template>
   <section class="portada">
     <div>
@@ -14,6 +21,29 @@
       <p><i class="bi bi-leaf" aria-hidden="true"></i> Ingredientes frescos</p>
       <p><i class="bi bi-heart" aria-hidden="true"></i> Preparado con cuidado</p>
       <p><i class="bi bi-stars" aria-hidden="true"></i> Opciones para tu ritmo</p>
+    </div>
+  </section>
+
+  <section class="reel-destacado" aria-labelledby="reel-titulo">
+    <div class="reel-texto">
+      <p class="etiqueta">DESDE NUESTRO INSTAGRAM</p>
+      <h2 id="reel-titulo">Un vistazo a Modo Shake</h2>
+      <p>Mira cómo preparan un bowl de mini pancakes en este Reel de @modoshake.</p>
+      <a :href="urlReel" target="_blank" rel="noopener noreferrer">Ver Reel en Instagram <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
+      <p class="reel-nota">El video se carga desde Instagram al pulsar reproducir.</p>
+    </div>
+    <div class="reel-marco">
+      <iframe
+        v-if="reelActivo"
+        src="https://www.instagram.com/reel/DfGDmK7gEna/embed/"
+        title="Reel de Modo Shake: preparación de un bowl de mini pancakes"
+        allow="autoplay; encrypted-media; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+      <button v-else class="reel-portada" type="button" aria-label="Reproducir Reel de Modo Shake" @click="reelActivo = true">
+        <img src="/images/pancake.jpg" width="960" height="960" alt="" loading="lazy">
+        <span class="reel-reproducir"><i class="bi bi-play-fill" aria-hidden="true"></i><span>Reproducir Reel</span></span>
+      </button>
     </div>
   </section>
 </template>

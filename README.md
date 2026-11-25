@@ -31,6 +31,7 @@ El build se genera en `dist/`. `npm test` ejecuta pruebas del catálogo (200, 40
 - Carrito con cantidades, total, eliminación y enlace para consultar la selección por WhatsApp. Los suplementos se muestran con precio estimado.
 - Formulario de contacto con validación inmediata, borrador recuperable y consultas que se pueden revisar o eliminar. Los datos se guardan solo en el navegador.
 - Menú adaptable, navegación con teclado, mensajes accesibles, transiciones que respetan la preferencia de movimiento reducido y botón flotante de WhatsApp.
+- Reel público de `@modoshake` en la página de inicio. El reproductor de Instagram se carga al pulsar “Reproducir Reel”; también hay un enlace directo al video.
 
 Los perfiles locales no verifican identidades ni tienen contraseñas; el acceso Google sí usa Firebase Authentication. Los carritos de ambos modos permanecen en el navegador y no se sincronizan entre dispositivos. El carrito no procesa pagos y el formulario no envía consultas al restaurante ni a un servidor. El botón de WhatsApp abre el chat; un bot necesitaría un servicio configurado aparte.
 
