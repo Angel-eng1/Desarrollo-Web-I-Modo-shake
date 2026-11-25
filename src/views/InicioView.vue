@@ -1,6 +1,13 @@
 <script setup>
 import { computed, ref } from 'vue'
 
+const fotosMenu = [
+  { id: 1, nombre: 'Batido de fresa', imagen: '/images/batido-fresa.jpg' },
+  { id: 4, nombre: 'Bowl de frutas y granola', imagen: '/images/bowl.jpg' },
+  { id: 5, nombre: 'Sándwich', imagen: '/images/sandwich.jpg' },
+  { id: 7, nombre: 'Sodas', imagen: '/images/sodas.jpg' },
+]
+
 const publicaciones = [
   {
     id: 'DfGDmK7gEna',
@@ -19,12 +26,28 @@ const publicaciones = [
     embed: 'https://www.instagram.com/p/Dfry-5QEbaz/embed/',
   },
   {
+    id: 'DfiMj-8gHVP',
+    tipo: 'Reel',
+    titulo: 'Una tarde en Modo Shake',
+    descripcion: 'Un vistazo a los pedidos, productos y espacios del restaurante.',
+    url: 'https://www.instagram.com/reel/DfiMj-8gHVP/',
+    embed: 'https://www.instagram.com/reel/DfiMj-8gHVP/embed/',
+  },
+  {
     id: 'DfYM4nDlKh0',
     tipo: 'Fotos',
     titulo: 'Momentos en Modo Shake',
     descripcion: 'Personas y momentos compartidos en Modo Shake.',
     url: 'https://www.instagram.com/p/DfYM4nDlKh0/',
     embed: 'https://www.instagram.com/p/DfYM4nDlKh0/embed/',
+  },
+  {
+    id: 'Df22YxqAyG3',
+    tipo: 'Reel',
+    titulo: 'Un lugar para compartir',
+    descripcion: 'Comida, música y momentos para disfrutar en Modo Shake.',
+    url: 'https://www.instagram.com/reel/Df22YxqAyG3/',
+    embed: 'https://www.instagram.com/reel/Df22YxqAyG3/embed/',
   },
 ]
 
@@ -55,12 +78,28 @@ function mover(direccion) {
     </div>
   </section>
 
+  <section class="adelanto-menu" aria-labelledby="adelanto-titulo">
+    <div class="adelanto-encabezado">
+      <div>
+        <p class="etiqueta">DEL MENÚ</p>
+        <h2 id="adelanto-titulo">Elige tu próxima pausa</h2>
+      </div>
+      <RouterLink to="/productos">Ver todos los productos <i class="bi bi-arrow-right" aria-hidden="true"></i></RouterLink>
+    </div>
+    <div class="adelanto-grid">
+      <RouterLink v-for="foto in fotosMenu" :key="foto.id" class="adelanto-producto" :to="`/productos/${foto.id}`">
+        <img :src="foto.imagen" alt="" width="960" height="960" loading="lazy">
+        <span>{{ foto.nombre }} <i class="bi bi-arrow-up-right" aria-hidden="true"></i></span>
+      </RouterLink>
+    </div>
+  </section>
+
   <section class="galeria-instagram" aria-labelledby="galeria-titulo">
     <div class="galeria-encabezado">
       <div>
         <p class="etiqueta">DESDE @MODOSHAKE</p>
         <h2 id="galeria-titulo">Momentos para compartir</h2>
-        <p>Explora un Reel y fotos publicados por Modo Shake en Instagram.</p>
+        <p>Explora Reels y fotos publicados por Modo Shake en Instagram.</p>
       </div>
       <a href="https://www.instagram.com/modoshake/" target="_blank" rel="noopener noreferrer">Seguir en Instagram <i class="bi bi-arrow-up-right" aria-hidden="true"></i></a>
     </div>
