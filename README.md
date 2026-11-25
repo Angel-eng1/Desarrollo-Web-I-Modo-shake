@@ -25,7 +25,7 @@ El build se genera en `dist/`. `npm test` ejecuta pruebas del catálogo (200, 40
 
 - Navegación SPA con vistas de Inicio, Categorías, Productos, detalle, Carrito, Perfil, Nosotros y Contacto, además de una ruta 404. Las vistas se cargan al visitarlas.
 - Catálogo de siete productos obtenido con Fetch desde `public/data.json`, con indicador de carga, manejo de errores y reintento.
-- Filtros por categoría y búsqueda por nombre. El detalle consulta el producto por ID y muestra un mensaje si no existe.
+- Filtros por categoría y búsqueda por nombre. El detalle consulta el producto por ID, presenta su precio y foto, ofrece consulta por WhatsApp y sugiere otros productos del catálogo; muestra un mensaje si el ID no existe.
 - Perfiles locales de demostración. Cada perfil conserva su propio carrito en `localStorage`; para agregar un producto se requiere un perfil activo.
 - Carrito con cantidades, total, eliminación y enlace para consultar la selección por WhatsApp. Los suplementos se muestran con precio estimado.
 - Formulario de contacto con validación inmediata, borrador recuperable y consultas que se pueden revisar o eliminar. Los datos se guardan solo en el navegador.
@@ -59,4 +59,4 @@ Los perfiles no verifican identidades ni tienen contraseñas. El carrito no proc
 
 El WhatsApp configurado es **+57 321 879 4687**; Instagram y TikTok usan **@modoshake**. Los horarios están en `src/config/negocio.js`. La dirección permanece vacía hasta que el negocio la confirme; el sitio ofrece WhatsApp para preguntar cómo llegar y no muestra un mapa.
 
-URL de producción: [modoshake.netlify.app](https://modoshake.netlify.app). Netlify debe usar Node.js 24, construir con `npm run build` y publicar `dist`; estos valores están en `netlify.toml`. La URL puede mostrar la versión anterior hasta que se despliegue esta rama Vue.
+URL de producción: [modoshake.netlify.app](https://modoshake.netlify.app). Netlify usa Node.js 24, construye con `npm run build` y publica `dist`; estos valores están en `netlify.toml`.
