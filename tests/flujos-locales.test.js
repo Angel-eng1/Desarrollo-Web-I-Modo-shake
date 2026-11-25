@@ -51,6 +51,27 @@ test('el carrito pertenece al perfil y se recupera tras reiniciar los stores', (
   assert.equal(carrito.total, 30000)
 })
 
+test('una cuenta Google no comparte el carrito con un perfil local del mismo correo', () => {
+  const memoria = prepararNavegador()
+  const catalogo = useCatalogoStore()
+  const perfil = usePerfilStore()
+  const carrito = useCarritoStore()
+  catalogo.productos = productos
+
+  assert.equal(perfil.registrar('Ana Local', 'ana@ejemplo.com'), true)
+  assert.equal(carrito.agregar(1), true)
+  perfil.actual = {
+    nombre: 'Ana Google', correo: 'ana@ejemplo.com',
+    proveedor: 'google', carritoClave: 'google:uid-123',
+  }
+  assert.equal(carrito.unidades, 0)
+  assert.equal(carrito.agregar(2), true)
+  assert.notEqual(memoria.get('modo-shake-carrito:ana@ejemplo.com'), memoria.get('modo-shake-carrito:google:uid-123'))
+
+  assert.equal(perfil.entrar('ana@ejemplo.com'), true)
+  assert.equal(carrito.detalles[0].producto.id, 1)
+})
+
 test('el borrador y las consultas sobreviven al reinicio y se pueden eliminar', () => {
   const memoria = prepararNavegador()
   let consultas = useConsultasStore()

@@ -33,7 +33,7 @@ const whatsappUrl = computed(() => {
 <template>
   <section class="pagina">
     <h1 tabindex="-1">Carrito</h1>
-    <p v-if="!perfil.actual">Para guardar una selección, crea un perfil local o entra a uno existente.</p>
+    <p v-if="!perfil.actual">{{ perfil.googleDisponible ? 'Para guardar una selección, entra con Google o usa un perfil local.' : 'Para guardar una selección, crea un perfil local o entra a uno existente.' }}</p>
     <RouterLink v-if="!perfil.actual" class="boton" to="/perfil">Ir al perfil</RouterLink>
     <template v-else>
       <EstadoCatalogo :estado="catalogo.estado" :error="catalogo.error" @reintentar="catalogo.cargar(true)" />

@@ -4,7 +4,7 @@ import { useCatalogoStore } from './catalogo.js'
 import { usePerfilStore } from './perfil.js'
 
 const MAXIMO = 99
-const clave = (correo) => `modo-shake-carrito:${correo}`
+const clave = (identificador) => `modo-shake-carrito:${identificador}`
 
 // El carrito guarda solo identificadores y cantidades; toma los precios del catálogo.
 export const useCarritoStore = defineStore('carrito', () => {
@@ -13,10 +13,10 @@ export const useCarritoStore = defineStore('carrito', () => {
   const items = ref([])
   const aviso = ref('')
 
-  function recuperar(correo) {
-    if (!correo) return []
+  function recuperar(identificador) {
+    if (!identificador) return []
     try {
-      const datos = JSON.parse(localStorage.getItem(clave(correo)) || '[]')
+      const datos = JSON.parse(localStorage.getItem(clave(identificador)) || '[]')
       if (!Array.isArray(datos)) throw new Error('Carrito inválido')
       const ids = new Set()
       return datos.filter((item) => {
@@ -31,14 +31,17 @@ export const useCarritoStore = defineStore('carrito', () => {
     }
   }
 
-  watch(() => perfil.actual?.correo, (correo) => {
-    items.value = recuperar(correo)
+  // El UID de Google evita compartir el carrito con un perfil local del mismo correo.
+  const identificadorActual = () => perfil.actual?.carritoClave || perfil.actual?.correo
+  watch(identificadorActual, (identificador) => {
+    items.value = recuperar(identificador)
   }, { immediate: true, flush: 'sync' })
 
   function guardar() {
-    if (!perfil.actual) return false
+    const identificador = identificadorActual()
+    if (!identificador) return false
     try {
-      localStorage.setItem(clave(perfil.actual.correo), JSON.stringify(items.value))
+      localStorage.setItem(clave(identificador), JSON.stringify(items.value))
       return true
     } catch {
       aviso.value = 'No se pudo guardar el carrito en este navegador.'

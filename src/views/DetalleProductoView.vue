@@ -93,7 +93,7 @@ function agregar() {
               Consultar por WhatsApp <i class="bi bi-arrow-up-right" aria-hidden="true"></i>
             </a>
           </div>
-          <p v-if="!perfil.actual" class="detalle-ayuda">Para agregarlo al carrito, primero entra o crea un perfil local.</p>
+          <p v-if="!perfil.actual" class="detalle-ayuda">{{ perfil.googleDisponible ? 'Para agregarlo al carrito, entra con Google o usa un perfil local.' : 'Para agregarlo al carrito, primero entra o crea un perfil local.' }}</p>
           <p class="detalle-aviso" role="status" aria-live="polite">{{ aviso }}</p>
         </div>
       </article>

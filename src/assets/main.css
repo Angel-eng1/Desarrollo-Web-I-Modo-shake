@@ -166,6 +166,14 @@ main { min-height: 65vh; }
 @media (prefers-reduced-motion: reduce) { .esqueletos span { animation: none; } }
 
 /* Perfil y carrito */
+.acceso-google { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px; margin: 24px 0; padding: 24px; border-radius: 22px; background: #e9eedc; }
+.acceso-google h2 { margin: 0 0 8px; font: 800 1.3rem Montserrat, sans-serif; }
+.acceso-google p { margin: 0; line-height: 1.5; }
+.boton-google { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 48px; padding: 10px 20px; border: 1px solid #9eaf89; border-radius: 999px; background: #fff; color: #22281c; font: 800 1rem 'Nunito Sans', sans-serif; cursor: pointer; }
+.boton-google:hover:not(:disabled) { background: #fffaf1; }
+.boton-google:disabled { opacity: .65; cursor: not-allowed; }
+.boton-google i { color: #587a32; font-size: 1.2rem; }
+.acceso-google .aviso-configuracion { flex-basis: 100%; color: #59634c; font-size: .9rem; }
 .enlace-icono { position: relative; }
 .insignia { position: absolute; top: -6px; right: -5px; min-width: 22px; padding: 2px 5px; border-radius: 999px; background: #587a32; color: white; font: 800 .7rem 'Nunito Sans', sans-serif; text-align: center; }
 .formularios-perfil { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin: 24px 0; }

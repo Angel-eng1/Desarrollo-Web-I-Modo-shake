@@ -27,11 +27,21 @@ El build se genera en `dist/`. `npm test` ejecuta pruebas del catálogo (200, 40
 - Catálogo de siete productos obtenido con Fetch desde `public/data.json`, con indicador de carga, manejo de errores y reintento.
 - Filtros por categoría y búsqueda por nombre. El detalle consulta el producto por ID, presenta su precio y foto, ofrece consulta por WhatsApp y sugiere otros productos del catálogo; muestra un mensaje si el ID no existe.
 - Perfiles locales de demostración. Cada perfil conserva su propio carrito en `localStorage`; para agregar un producto se requiere un perfil activo.
+- Acceso con Google mediante Firebase Authentication cuando se configura un proyecto Firebase. El carrito de una cuenta Google se separa del de un perfil local, incluso si usan el mismo correo.
 - Carrito con cantidades, total, eliminación y enlace para consultar la selección por WhatsApp. Los suplementos se muestran con precio estimado.
 - Formulario de contacto con validación inmediata, borrador recuperable y consultas que se pueden revisar o eliminar. Los datos se guardan solo en el navegador.
 - Menú adaptable, navegación con teclado, mensajes accesibles, transiciones que respetan la preferencia de movimiento reducido y botón flotante de WhatsApp.
 
-Los perfiles no verifican identidades ni tienen contraseñas. El carrito no procesa pagos y el formulario no envía consultas al restaurante ni a un servidor. El botón de WhatsApp abre el chat; un bot necesitaría un servicio configurado aparte.
+Los perfiles locales no verifican identidades ni tienen contraseñas; el acceso Google sí usa Firebase Authentication. Los carritos de ambos modos permanecen en el navegador y no se sincronizan entre dispositivos. El carrito no procesa pagos y el formulario no envía consultas al restaurante ni a un servidor. El botón de WhatsApp abre el chat; un bot necesitaría un servicio configurado aparte.
+
+## Activar el acceso con Google
+
+1. Crear un proyecto en [Firebase Console](https://console.firebase.google.com/) y registrar una aplicación web.
+2. En **Authentication > Sign-in method**, habilitar **Google**. En **Settings > Authorized domains**, agregar `modoshake.netlify.app` y `localhost` para las pruebas locales.
+3. Copiar `.env.example` como `.env.local` y completar sus cuatro valores `VITE_FIREBASE_*` con la configuración web de Firebase. Reiniciar `npm run dev` y abrir la dirección `localhost` que muestra Vite.
+4. Para publicar este acceso, configurar las mismas cuatro variables de entorno en Netlify y hacer un nuevo despliegue. La configuración web no contiene un secreto de servidor; no añadir claves privadas ni secretos OAuth a variables `VITE_*`.
+
+Si falta esa configuración, el botón se muestra desactivado durante el desarrollo y se oculta en la versión publicada. Los perfiles locales siguen disponibles. El acceso real con Google requiere completar los pasos anteriores y probarlo con una cuenta Google.
 
 ## Estructura
 
@@ -40,6 +50,7 @@ Los perfiles no verifican identidades ni tienen contraseñas. El carrito no proc
 - `src/stores/`: estado de catálogo, carrito, perfil y consultas mediante Pinia.
 - `src/router/`: rutas de Vue Router, carga diferida y títulos.
 - `src/config/negocio.js`: WhatsApp, redes, horarios y dirección del negocio.
+- `src/config/firebase.js` y `.env.example`: conexión opcional con Firebase Authentication.
 - `src/assets/main.css`: estilos adaptables.
 - `public/data.json` y `public/images/`: catálogo e imágenes.
 - `legacy/`: código del Avance 2 conservado como referencia de migración.

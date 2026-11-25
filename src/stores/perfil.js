@@ -1,5 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth'
+import { authGoogle, googleDisponible } from '../config/firebase.js'
 
 const CLAVE_PERFILES = 'modo-shake-perfiles'
 const CLAVE_ACTIVO = 'modo-shake-perfil-activo'
@@ -23,6 +25,67 @@ export const usePerfilStore = defineStore('perfil', () => {
   const actual = ref(perfiles.value.find((item) => item.correo === correoActivo) || null)
   const pendienteId = ref(null)
   const aviso = ref('')
+  const googleCargando = ref(false)
+
+  // Firebase restaura la sesión Google; el carrito usa su UID, separado del perfil local.
+  function activarUsuarioGoogle(usuario) {
+    if (!usuario?.uid) return false
+    try { localStorage.removeItem(CLAVE_ACTIVO) } catch { /* La sesión Google no depende de esta clave. */ }
+    actual.value = {
+      nombre: usuario.displayName || usuario.email || 'Cuenta Google',
+      correo: usuario.email || '',
+      proveedor: 'google',
+      carritoClave: `google:${usuario.uid}`,
+    }
+    aviso.value = `Entraste con Google como ${actual.value.nombre}.`
+    return true
+  }
+
+  if (authGoogle) {
+    onAuthStateChanged(authGoogle, (usuario) => {
+      if (usuario) activarUsuarioGoogle(usuario)
+      else if (actual.value?.proveedor === 'google') actual.value = null
+    }, () => { aviso.value = 'No se pudo recuperar la sesión de Google.' })
+  }
+
+  async function entrarGoogle() {
+    if (!authGoogle) {
+      aviso.value = 'El acceso con Google aún no está configurado.'
+      return false
+    }
+    googleCargando.value = true
+    try {
+      const credencial = await signInWithPopup(authGoogle, new GoogleAuthProvider())
+      return activarUsuarioGoogle(credencial.user)
+    } catch (error) {
+      if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
+        aviso.value = 'Se canceló el acceso con Google.'
+      } else if (error.code === 'auth/popup-blocked') {
+        aviso.value = 'El navegador bloqueó la ventana de Google. Permite ventanas emergentes e inténtalo de nuevo.'
+      } else if (error.code === 'auth/unauthorized-domain') {
+        aviso.value = 'Este dominio aún no está autorizado en Firebase.'
+      } else {
+        aviso.value = 'No se pudo entrar con Google. Inténtalo de nuevo.'
+      }
+      return false
+    } finally {
+      googleCargando.value = false
+    }
+  }
+
+  async function cerrarGoogle() {
+    if (!authGoogle || actual.value?.proveedor !== 'google') return false
+    try {
+      await signOut(authGoogle)
+      actual.value = null
+      pendienteId.value = null
+      aviso.value = 'Sesión de Google cerrada.'
+      return true
+    } catch {
+      aviso.value = 'No se pudo cerrar la sesión de Google.'
+      return false
+    }
+  }
 
   function guardar(clave, valor) {
     try {
@@ -69,6 +132,7 @@ export const usePerfilStore = defineStore('perfil', () => {
   }
 
   function cerrar() {
+    if (actual.value?.proveedor === 'google') return false
     try {
       localStorage.removeItem(CLAVE_ACTIVO)
       actual.value = null
@@ -82,7 +146,7 @@ export const usePerfilStore = defineStore('perfil', () => {
   }
 
   function eliminar() {
-    if (!actual.value) return false
+    if (!actual.value || actual.value.proveedor === 'google') return false
     const correo = actual.value.correo
     const restantes = perfiles.value.filter((item) => item.correo !== correo)
     try {
@@ -100,5 +164,8 @@ export const usePerfilStore = defineStore('perfil', () => {
     }
   }
 
-  return { perfiles, actual, pendienteId, aviso, registrar, entrar, cerrar, eliminar }
+  return {
+    perfiles, actual, pendienteId, aviso, googleDisponible, googleCargando,
+    registrar, entrar, entrarGoogle, cerrar, cerrarGoogle, eliminar,
+  }
 })
