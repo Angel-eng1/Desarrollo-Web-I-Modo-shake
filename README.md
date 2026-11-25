@@ -1,74 +1,92 @@
-# Modo Shake — Desarrollo Web I
+# Modo Shake
 
-Aplicación web académica para presentar los productos de Modo Shake en Sahagún, Córdoba. La entrega final es una SPA desarrollada con Vue 3, Vite, Vue Router y Pinia.
+Aplicación web de Modo Shake, desarrollada como proyecto de Desarrollo Web I. Permite explorar el catálogo, consultar productos, guardar una selección en el carrito y usar un formulario de contacto de demostración. Está construida como una aplicación de una sola página con Vue 3, Vite, Vue Router y Pinia.
 
-## Ejecutar el proyecto
+**Sitio publicado:** [modoshake.netlify.app](https://modoshake.netlify.app)
 
-Requiere Node.js compatible con el campo `engines` de `package.json` y npm.
+## Requisitos
+
+- Node.js `^22.18.0` o `>=24.12.0` y npm. Se recomienda Node.js 24, la versión usada en Netlify.
+- Conexión a Internet para cargar Google Fonts, Bootstrap Icons y las publicaciones incrustadas de Instagram.
+
+## Instalación y ejecución local
 
 ```bash
-npm install
+git clone https://github.com/Angel-eng1/Desarrollo-Web-I-Modo-shake.git
+cd Desarrollo-Web-I-Modo-shake
+npm ci
 npm run dev
 ```
 
-Vite muestra la dirección local en la terminal. Para comprobar la compilación de producción:
+Abre en el navegador la dirección que muestre Vite en la terminal, normalmente `http://localhost:5173/`. La aplicación debe ejecutarse mediante Vite; abrir `index.html` directamente como archivo no carga el proyecto.
+
+La aplicación funciona sin configurar Firebase: se pueden crear perfiles locales de demostración, explorar el catálogo y probar el carrito y el formulario.
+
+## Acceso con Google en local (opcional)
+
+Para probar el acceso con Google se necesita un proyecto propio de Firebase con una aplicación web registrada:
+
+1. En Firebase Authentication, habilita el proveedor **Google** y autoriza `localhost` en **Settings > Authorized domains**.
+2. Copia `.env.example` a `.env.local` en la raíz del proyecto.
+3. Completa en `.env.local` los cuatro valores de la configuración web de Firebase:
+
+   ```dotenv
+   VITE_FIREBASE_API_KEY=
+   VITE_FIREBASE_AUTH_DOMAIN=
+   VITE_FIREBASE_PROJECT_ID=
+   VITE_FIREBASE_APP_ID=
+   ```
+
+4. Reinicia `npm run dev` y prueba **Continuar con Google** en la página Perfil.
+
+`.env.local` no se incluye en Git. Las variables `VITE_*` se incorporan al código del navegador: usa solo la configuración web de Firebase, nunca claves privadas ni secretos de servidor. Si faltan los valores, el botón de Google queda desactivado durante el desarrollo; los perfiles locales siguen disponibles.
+
+## Pruebas y compilación
 
 ```bash
+npm test
 npm run build
 npm run preview
-npm test
 ```
 
-El build se genera en `dist/`. `npm test` ejecuta pruebas del catálogo (200, 404, 500 y reintento), así como de persistencia y separación de datos entre perfiles, con el ejecutor incluido en Node.js. Las tipografías de Google Fonts y Bootstrap Icons se enlazan desde CDN y requieren conexión a Internet.
+`npm test` comprueba el catálogo, la persistencia local y la separación de carritos por perfil. `npm run build` genera la versión de producción en `dist/`; ejecuta `npm run preview` después del build para revisarla localmente. El servidor de desarrollo se detiene con `Ctrl+C`.
 
-## Funciones
+## Funciones principales
 
-- Navegación SPA con vistas de Inicio, Categorías, Productos, detalle, Carrito, Perfil, Nosotros y Contacto, además de una ruta 404. Las vistas se cargan al visitarlas.
-- Catálogo de siete productos obtenido con Fetch desde `public/data.json`, con indicador de carga, manejo de errores y reintento.
-- Filtros por categoría y búsqueda por nombre. El detalle consulta el producto por ID, presenta su precio y foto, ofrece consulta por WhatsApp y sugiere otros productos del catálogo; muestra un mensaje si el ID no existe.
-- Perfiles locales de demostración. Cada perfil conserva su propio carrito en `localStorage`; para agregar un producto se requiere un perfil activo.
-- Acceso y registro con Google mediante Firebase Authentication cuando se configura un proyecto Firebase. El primer acceso crea la cuenta; los siguientes recuperan la misma identidad. El carrito de una cuenta Google se separa del de un perfil local, incluso si usan el mismo correo.
-- Carrito con cantidades, total, eliminación y enlace para consultar la selección por WhatsApp. Los suplementos se muestran con precio estimado.
-- Formulario de contacto con validación inmediata, borrador recuperable y consultas que se pueden revisar o eliminar. Los datos se guardan solo en el navegador.
-- Menú adaptable, navegación con teclado, mensajes accesibles, transiciones que respetan la preferencia de movimiento reducido y botón flotante de WhatsApp.
-- Galería de cuatro fotos del catálogo en la página de inicio, enlazadas a sus productos. El carrusel de Instagram presenta tres Reels y dos publicaciones de fotos de `@modoshake`; permite avanzar, retroceder o elegir una publicación, con enlace a cada original.
+- Rutas de Inicio, Categorías, Productos, detalle de producto, Carrito, Perfil, Nosotros y Contacto, además de una página 404.
+- Catálogo cargado desde `public/data.json` con Fetch, estados de carga y error, y opción de reintento. Incluye filtros por categoría y búsqueda por nombre.
+- Carrito por perfil con cantidades y total, guardado en `localStorage`. Requiere un perfil activo para añadir productos.
+- Perfiles locales de demostración y acceso con Google mediante Firebase Authentication cuando está configurado.
+- Formulario de contacto con validación inmediata, borrador y consultas guardadas en el navegador.
+- Diseño adaptable, navegación con teclado, menú móvil y galería de publicaciones de Instagram en la página de inicio.
+- Enlaces a WhatsApp para consultar productos, pedir indicaciones o iniciar una conversación.
 
-Los perfiles locales no verifican identidades ni tienen contraseñas; el acceso Google sí usa Firebase Authentication. Los carritos de ambos modos permanecen en el navegador y no se sincronizan entre dispositivos. El carrito no procesa pagos y el formulario no envía consultas al restaurante ni a un servidor. El botón de WhatsApp abre el chat; un bot necesitaría un servicio configurado aparte.
+Los perfiles locales no tienen contraseña ni verifican la identidad. El carrito y las consultas se guardan solo en el navegador y no se sincronizan entre dispositivos. El formulario no envía información al restaurante y el carrito no procesa pagos. El botón de WhatsApp abre el chat; no incluye un bot.
 
-## Activar el acceso con Google
+## Estructura del proyecto
 
-1. Crear un proyecto en [Firebase Console](https://console.firebase.google.com/) y registrar una aplicación web.
-2. En **Authentication > Sign-in method**, habilitar **Google**. En **Settings > Authorized domains**, agregar `modoshake.netlify.app` y `localhost` para las pruebas locales.
-3. Copiar `.env.example` como `.env.local` y completar sus cuatro valores `VITE_FIREBASE_*` con la configuración web de Firebase. Reiniciar `npm run dev` y abrir la dirección `localhost` que muestra Vite.
-4. Para publicar este acceso, configurar las mismas cuatro variables de entorno en Netlify y hacer un nuevo despliegue. La configuración web no contiene un secreto de servidor; no añadir claves privadas ni secretos OAuth a variables `VITE_*`.
+| Ruta | Contenido |
+| --- | --- |
+| `src/views/` | Páginas de la aplicación. |
+| `src/components/` | Elementos reutilizables de la interfaz. |
+| `src/stores/` | Estado compartido de catálogo, carrito, perfil y consultas con Pinia. |
+| `src/router/` | Rutas, carga diferida de vistas y títulos de página. |
+| `src/config/` | Datos del negocio y configuración opcional de Firebase. |
+| `src/assets/main.css` | Estilos y reglas para distintos tamaños de pantalla. |
+| `public/data.json`, `public/images/` | Productos e imágenes locales. |
+| `tests/` | Pruebas automatizadas de los flujos locales. |
+| `legacy/` | Código anterior conservado como referencia de la migración a Vue. |
+| `netlify.toml`, `public/_redirects` | Build y redirección de rutas para Netlify. |
 
-Si falta esa configuración, el botón se muestra desactivado durante el desarrollo y se oculta en la versión publicada. Los perfiles locales siguen disponibles. El acceso real con Google requiere completar los pasos anteriores y probarlo con una cuenta Google.
+## Comprobación manual rápida
 
-## Estructura
+1. Abre Categorías y Productos; prueba el filtro, la búsqueda y el detalle de un producto.
+2. Crea un perfil local, añade un producto al carrito, cambia la cantidad y recarga la página para comprobar que se conserva.
+3. En Contacto, completa un borrador, recarga la página y comprueba que los datos siguen allí. Guarda una consulta y elimínala.
+4. Abre una ruta directamente o recárgala para comprobar la navegación. Revisa también el menú en una pantalla móvil.
 
-- `src/views/`: páginas asociadas a las rutas.
-- `src/components/`: encabezado, pie, tarjetas, filtros y elementos compartidos.
-- `src/stores/`: estado de catálogo, carrito, perfil y consultas mediante Pinia.
-- `src/router/`: rutas de Vue Router, carga diferida y títulos.
-- `src/config/negocio.js`: WhatsApp, redes, horarios y dirección del negocio.
-- `src/config/firebase.js` y `.env.example`: conexión opcional con Firebase Authentication.
-- `src/assets/main.css`: estilos adaptables.
-- `public/data.json` y `public/images/`: catálogo e imágenes.
-- `legacy/`: código del Avance 2 conservado como referencia de migración.
-- `netlify.toml` y `public/_redirects`: build y redirección de rutas para Netlify.
-- `tests/`: pruebas de los flujos locales de perfiles, carrito y consultas.
+## Datos del negocio y despliegue
 
-## Comprobación local
+WhatsApp: **+57 321 879 4687**. Instagram y TikTok: **@modoshake**. Los horarios se definen en `src/config/negocio.js`. La dirección permanece vacía hasta que el negocio la confirme; la aplicación ofrece WhatsApp para preguntar cómo llegar.
 
-1. Abrir Categorías, elegir una categoría y comprobar el filtro en Productos. Usar la búsqueda y **Limpiar filtros**.
-2. Abrir un detalle de producto y probar una URL con un ID inexistente.
-3. Agregar un producto sin perfil, crear un perfil local y comprobar que el producto pendiente llega al carrito.
-4. Cambiar la cantidad, recargar, cerrar sesión y volver a entrar para comprobar la recuperación del carrito de ese perfil.
-5. En Contacto, intentar guardar campos vacíos, completar un borrador y recargar. Después guardar y eliminar una consulta local.
-6. Revisar el menú móvil, las rutas al recargar y el diseño a 360, 768 y 1280 px.
-
-## Datos del negocio y publicación
-
-El WhatsApp configurado es **+57 321 879 4687**; Instagram y TikTok usan **@modoshake**. Los horarios están en `src/config/negocio.js`. La dirección permanece vacía hasta que el negocio la confirme; el sitio ofrece WhatsApp para preguntar cómo llegar y no muestra un mapa.
-
-URL de producción: [modoshake.netlify.app](https://modoshake.netlify.app). Netlify usa Node.js 24, construye con `npm run build` y publica `dist`; estos valores están en `netlify.toml`.
+La versión publicada está en [Netlify](https://modoshake.netlify.app). El proyecto se compila con `npm run build` y se publica desde `dist/`. Para habilitar Google en otro despliegue, configura allí las mismas cuatro variables `VITE_FIREBASE_*`, autoriza el dominio en Firebase Authentication y genera un nuevo build.
